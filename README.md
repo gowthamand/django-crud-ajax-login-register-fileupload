@@ -14,10 +14,11 @@
 
  5. python manage.py runserver
 
- ```
 
-* 6. Loin to http://127.0.0.1:8000
+ 6. Login to http://127.0.0.1:8000
 
-* 7. python manage.py createsuperuser (enter username, email, password)
+ 7. python manage.py createsuperuser (enter username, email, password)
+
+```
 
 # Now Django Project Ready
