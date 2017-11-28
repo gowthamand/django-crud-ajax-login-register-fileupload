@@ -1,4 +1,4 @@
-# Django Crud, Ajax Submit, Login, Register,Dashboard Etc..
+# Django Crud, Ajax, Login, Register,Dashboard Etc..
 
 # Step for Set Up
 ``` 
