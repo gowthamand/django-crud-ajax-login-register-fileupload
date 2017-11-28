@@ -1,0 +1,10 @@
+{% extends 'crud/auth_temp.html' %}
+{% block body %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        <table border="0">
+            {{ form.as_table }}
+        </table>
+        <input type="submit"class="btn btn-warning" value="Register" /> <a href="/" class="btn btn-success">Login</a>
+    </form>
+{% endblock %}

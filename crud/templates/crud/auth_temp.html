@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+        <title>Dashboard Template for Bootstrap</title>
+
+        <!-- Bootstrap core CSS -->
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'crud/css/bootstrap.min.css' %}"/>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'crud/css/font-awesome.min.css' %}"/>
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" type="text/css" href="{% static 'crud/css/dashboard.css' %}"/>
+        <!--dynamic style-->
+        {% block stylesheet %}{% endblock %}
+    </head>
+
+    <body>
+        
+
+        <div class="container-fluid">
+            <div class="row">               
+                    <div class="container">
+                        <div class="col-md-12 well">
+                            <h3 class="text-success offset-md-4">Welcome to Django </h3>
+                            <hr style="border-top:1px dotted #000;"/>
+                        </div>
+                    </div>
+                <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">    
+                    {% block body %}{% endblock %}                    
+                </main>
+            </div>
+        </div>
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+        <script src="{% static 'crud/js/jquery-3.2.1.min.js' %}"></script>
+        <!--<script>window.jQuery || document.write('<script src="/static/crud/js/jquery-3.2.1.min.js"><\/script>')</script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+        <script src="{% static 'crud/js/bootstrap.min.js' %}"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="{% static 'crud/js/ie10-viewport-bug-workaround.js' %}"></script>
+        <!--Dynamic Javascript-->
+        {% block javascript %}{% endblock %}
+    </body>
+</html>

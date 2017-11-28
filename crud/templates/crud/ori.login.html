@@ -1,0 +1,12 @@
+{% extends 'crud/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+  <h2>Login</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+{% endblock %}

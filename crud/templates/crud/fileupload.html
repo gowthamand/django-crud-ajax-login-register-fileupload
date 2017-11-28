@@ -1,0 +1,43 @@
+{% extends 'crud/base.html' %}
+{% block body %}
+<h1>Simple File Upload</h1>
+<form class="form-inline" action="fileupload" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="form-group">
+            <label for="comment">Comment:</label>
+            <textarea class="form-control" name="description" rows="5"></textarea>
+        </div>
+    <hr>
+        <div class="form-group">
+            <label class="sr-only" for="pwd">File</label>
+            <input type="file" name="myfile">
+        </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+<br />
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+<table class="table table-bordered">
+    <thead class="alert-warning">
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Created At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for documents in document %}
+            <tr>
+                <td>{{ document.description }}</td>
+                <td>{{ document.document }}</td>
+                <td>{{ document.uploaded_at }}</td>
+                <td><center><a class="btn btn-sm btn-warning" href="edit/{{ member.id }}"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="glyphicon glyphicon-trash"></span> Delete</a></center></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
