@@ -1,4 +1,11 @@
 # <a href="https://github.com/gowthamand/django-crud-ajax-login-register-fileupload">Django Crud, Ajax, Login, Register,Dashboard Etc..</a>
+### Status
+
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](#)
+[![npm version](https://img.shields.io/npm/v/startbootstrap-sb-admin.svg)](https://www.npmjs.com/package/startbootstrap-sb-admin)
+[![Build Status](https://travis-ci.org/BlackrockDigital/startbootstrap-sb-admin.svg?branch=master)](#)
+[![dependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin/status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin)
+[![devDependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin/dev-status.svg)](#)
 
 #### Key Features
 - 1 . Register
