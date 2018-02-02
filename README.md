@@ -1,6 +1,18 @@
 # <a href="https://github.com/gowthamand/django-crud-ajax-login-register-fileupload">Django Crud, Ajax, Login, Register,Dashboard Etc..</a>
 
-# Features 
+## Key Features
+
+### 1 . Register
+### 2 . Login
+### 3 . File Upload
+### 4 . CRUD Application
+### 5 . Ajax CRUD Application
+### 6 . File Upload
+### 7 . CSV Upload
+### 8 . CSV Import
+
+
+
 # Step for Set Up
 ``` 
  1. git clone https://github.com/gowthamand/django-crud-ajax-login-register-fileupload
@@ -11,11 +23,15 @@
 
  4. python3 manage.py migrate
 
- 5. python3 manage.py runserver
+ 5. python3 manage.py makemigrations
 
- 6. Login to http://127.0.0.1:8000
+ 6. python3 manage.py migrate
 
- 7. python manage.py createsuperuser (enter username, email, password)
+ 7. python3 manage.py runserver
+
+ 8. Login to http://127.0.0.1:8000
+
+ 9. python manage.py createsuperuser (enter username, email, password)
 
 ```
 ## Screen Shots
