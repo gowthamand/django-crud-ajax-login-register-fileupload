@@ -20,6 +20,6 @@
 ```
 ## Screen Shots
 
-[![SB Admin Preview](https://startbootstrap.com/assets/img/templates/sb-admin.jpg)](https://blackrockdigital.github.io/startbootstrap-sb-admin/)
+[![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/1.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
 
 # Now Django Project Ready
