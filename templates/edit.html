@@ -1,0 +1,55 @@
+{% extends 'layout/app.html' %}
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active"><a href="{% url 'list' %}" >Crud Application</a></li>
+</ol>
+<div class="container card">
+    <form class="form-horizontal" action="update/{{ members.id }}" method="POST">
+        {% csrf_token %}
+        <div class="form-group"></div>
+
+        <div class="form-group row">
+            <label for="example-text-input" class="col-md-2 col-form-label">First Name</label>
+            <div class="col-md-6">
+                <input class="form-control" type="text" name="firstname" value="{{ members.firstname }}" placeholder="First Name" id="example-text-input">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-md-2 col-form-label">Last Name</label>
+            <div class="col-md-6">
+                <input class="form-control" type="text" name="lastname" value="{{ members.firstname }}" placeholder="Last Name" id="example-text-input">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="example-tel-input" class="col-md-2 col-form-label">Description</label>
+            <div class="col-md-6">
+                <textarea class="form-control" name="description" rows="1"  placeholder="Description">{{ members.description }}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="example-number-input" class="col-md-2 col-form-label">Mobile Number</label>
+            <div class="col-md-6">
+                <input class="form-control" type="tel" name="mobile_number" value="{{ members.mobile_number }}" placeholder="Mobile Number" id="example-number-input">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="example-date-input" class="col-md-2 col-form-label">Date</label>
+            <div class="col-md-4">
+                <input class="form-control" type="date" name="date" value="{{ members.date }}" id="example-date-input" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="lgFormGroupInput" class="col-sm-2 col-form-label col-form-label-lg"></label>
+            <div class="col-sm-6">
+                <button type="submit" class="btn btn-sm btn-warning"><span class="fa fa-edit"></span> Update</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

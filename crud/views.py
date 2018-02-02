@@ -1,61 +1,81 @@
 from django.shortcuts import render, redirect
-from .models import Member, Document, Ajax
+from .models import Member, Document , Ajax
 import datetime
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from crud.forms import *
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-from django.template import RequestContext
-from django.template.loader import render_to_string
-
-
+from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
 def index(request):
-    members = Member.objects.all()
-    context = {'members': members}
-    return render(request, 'crud/index.html', context)
+    return render(request, 'index.html')
+
+@login_required
+def list(request):
+    members_list = Member.objects.all()
+    paginator = Paginator(members_list, 5)
+    page = request.GET.get('page')
+    try:
+        members = paginator.page(page)
+    except PageNotAnInteger:
+        members = paginator.page(1)
+    except EmptyPage:
+        members = paginator.page(paginator.num_pages)
+    return render(request, 'list.html', {'members': members})
 
 @login_required
 def create(request):
-    member = Member(
-    firstname=request.POST['firstname'],
-    lastname=request.POST['lastname'],
-    created_at=datetime.datetime.now(),
-    updated_at=datetime.datetime.now(),)
-    member.save()
-    messages.success(request, 'Member was created successfully!')
-    return redirect('/')
+    if request.method == 'POST':
+        member = Member(
+        firstname=request.POST['firstname'],
+        lastname=request.POST['lastname'],
+        mobile_number=request.POST['mobile_number'],
+        description=request.POST['description'],
+        date=request.POST['date'],
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(), )
+        try:
+            member.full_clean()
+        except ValidationError as e:
+            pass
+        member.save()
+        messages.success(request, 'Member was created successfully!')
+        return redirect('/list')
+    else:
+        return render(request, 'add.html')
 
 @login_required    
 def edit(request, id):
     members = Member.objects.get(id=id)
     context = {'members': members}
-    return render(request, 'crud/edit.html', context)
+    return render(request, 'edit.html', context)
 
 @login_required
 def update(request, id):
     member = Member.objects.get(id=id)
     member.firstname = request.POST['firstname']
     member.lastname = request.POST['lastname']
+    mobile_number=request.POST['mobile_number'],
+    description=request.POST['description'],
+    date=request.POST['date'],
     member.save()
-    messages.warning(request, 'Member was updated successfully!')
-    return redirect('/')
+    messages.success(request, 'Member was updated successfully!')
+    return redirect('/list')
 
 @login_required
 def delete(request, id):
     member = Member.objects.get(id=id)
     member.delete()
-    messages.info(request, 'Member was deleted successfully!')
-    return redirect('/')
+    messages.error(request, 'Member was deleted successfully!')
+    return redirect('/list')
 
 @login_required
 def fileupload(request):
@@ -64,45 +84,60 @@ def fileupload(request):
         fs = FileSystemStorage()
         document = Document(
         description=request.POST['description'],
-        document=(myfile.name, myfile),
+        document=myfile.name, 
         uploaded_at=datetime.datetime.now(),)
         document.save()
         messages.success(request, 'Member was created successfully!')
-        
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
         return redirect('fileupload')
-
-    return render(request, 'crud/fileupload.html')
-
-@login_required
-def signup(request):
-    
-    return render(request, 'crud/signup.html')
+    else:
+        documents = Document.objects.order_by('-uploaded_at')[:3]
+        context = {'documents': documents}
+    return render(request, 'fileupload.html', context)
 
 @login_required
 def ajax(request):
     if request.method == 'POST':
         if request.is_ajax():
-            print "**ajax post**"
-            print (request.POST['telephone'])
             data = Ajax(
             text=request.POST['text'],
             search=request.POST['search'],
             email=request.POST['email'],
-            url=request.POST['url'],
             telephone=request.POST['telephone'],
-            password=request.POST['password'],
-            number=request.POST['number'],
             created_at=datetime.datetime.now(),
             updated_at=datetime.datetime.now(), 
             )
             data.save()
-            print(data)
             astr = "<html><b> you sent an ajax post request </b> <br> returned data: %s</html>" % data
-            return JsonResponse({'data': astr})
-    return JsonResponse({'data':'bar'})
+            return JsonResponse({'data': 'success'})
+    else:
+        ajax_list = Ajax.objects.order_by('-created_at')
+        context = {'ajax_list': ajax_list}
+    return render(request, 'ajax.html',  {'ajax_list': ajax_list})
 
+@csrf_protect
+def getajax(request):
+    if request.method == 'GET':
+        if request.is_ajax():
+            data = Ajax.objects.order_by('-created_at').first()
+            created = data.created_at.strftime('%m-%d-%Y %H:%M:%S')
+            datas = {"id": data.id, "text": data.text, "search": data.search, "email": data.email, "telephone": data.telephone, "created_at": created}
+            return JsonResponse(datas)
+    else:
+        return JsonResponse({'data': 'failure'})
+  
+@csrf_protect
+def ajax_delete(request):
+    if request.method == 'GET':
+        if request.is_ajax():
+            id=request.GET['id']
+            ajax = Ajax.objects.get(id=id)
+            ajax.delete()
+            return JsonResponse({'data': 'success'})
+    else:
+        return JsonResponse({'data': 'failure'})
+  
 
 @csrf_protect
 def register(request):
@@ -119,20 +154,10 @@ def register(request):
             return HttpResponseRedirect('/register/success/')
     else:
         form = RegistrationForm()
-    return render(request, 'crud/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
  
 def register_success(request):
     return render_to_response(
-    'crud/success.html',
+    'success.html',
     )
  
-def logout_page(request):
-    logout(request)
-    return HttpResponseRedirect('/')
- 
-@login_required
-def home(request):
-    return render_to_response(
-    'home.html',
-    { 'user': request.user }
-    )

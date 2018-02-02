@@ -1,0 +1,101 @@
+{% extends 'layout/app.html' %}
+{% block stylesheet %}
+<style>
+    .btn.btn-info {
+        background-color: $purple;
+        border-color: $purple;
+        outline: none;
+        &:hover {
+            background-color: darken($purple, 10%);
+            border-color: darken($purple, 10%);
+        }
+        &:active, &:focus {
+            background-color: lighten($purple, 5%);
+            border-color: lighten($purple, 5%);
+        }
+    }
+</style>
+{% endblock %}
+{% block body %}
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">File Upload</li>
+</ol>
+<div class="container card">
+    <div class="form-group row">
+
+    </div>
+    <div class="">
+        <form action="fileupload" class="form-horizontal" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for="lgFormGroupInput" class="col-sm-2 col-form-label">Files</label>
+                <div class="form-group col-md-6">
+                    <div class="input-group">
+                        <input type="file" name="myfile" class="file" style="display: none">
+                        <span class="input-group-btn">
+                            <button class="browse btn btn-info input-lg" type="button">Browse &hellip;</button>
+                        </span>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+                        <input type="text" class="form-control input-lg" readonly="" placeholder="Upload Image">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="lgFormGroupInput" class="col-sm-2 col-form-label">Comments</label>
+                <div class="col-sm-6">
+                    <textarea class="form-control" name="description" rows="1"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="lgFormGroupInput" class="col-sm-2 col-form-label col-form-label-lg"></label>
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        </form>
+        <br />
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        <table class="table table-bordered table-striped table-sm">
+            <thead class="alert-warning">
+                <tr>
+                    <th>Description</th>
+                    <th>File Name</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for document in documents %}
+                <tr>
+                    <td>{{ document.description }}</td>
+                    <td>{{ document.document }}</td>
+                    <td>{{ document.uploaded_at }}</td>
+                    <td><center><a class="btn btn-sm btn-warning" href="#"><span class="fa fa-edit"></span> Edit</a> 
+                        <a class="btn btn-sm btn-danger" href="#"><span class="fa fa-trash"></span> Delete</a></center></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+    $(document).on('click', '.browse', function () {
+        var file = $(this).parent().parent().parent().find('.file');
+        file.trigger('click');
+    });
+    $(document).on('change', '.file', function () {
+        $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+    });
+</script>
+
+{% endblock %}

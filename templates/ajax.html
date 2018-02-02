@@ -1,0 +1,114 @@
+{% extends 'layout/app.html' %}
+{% block body %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Ajax Crud</li>
+</ol>
+<div class="container card">
+    <form class="form-horizontal" id="example-form" action="ajax" method="POST">
+        {% csrf_token %}
+        <div class="form-group"></div>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-md-1 col-form-label">Text</label>
+            <div class="col-md-4">
+                <input class="form-control" type="text" id="example-text-input">
+            </div>
+             <label for="example-search-input" class="col-md-1 col-form-label">Search</label>
+            <div class="col-md-4">
+                <input class="form-control" type="search" id="example-search-input">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-email-input" class="col-md-1 col-form-label">Email</label>
+            <div class="col-md-4">
+                <input class="form-control" type="email" id="example-email-input">
+            </div>
+            <label for="example-tel-input" class="col-md-1 col-form-label">mobile</label>
+            <div class="col-md-4">
+                <input class="form-control" type="tel" onload='this.value = "";'  id="example-tel-input">
+            </div>
+        </div>
+        
+        <div class="form-group row">
+             <div class="col-md-2"></div>
+            <div class="col-md-8 offset-md-0">
+                <button type="submit" class="btn btn-block btn-warning" id="example-long-button">Submit</button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-bordered table-striped table-sm" id="myTable">
+        <thead class="alert-info">
+            <tr>
+                <th>Text</th>
+                <th>Search</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Created At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ajax in ajax_list %}
+            <tr id="table-{{ ajax.id }}">
+                <td>{{ ajax.text }}</td>
+                <td>{{ ajax.search }}</td>
+                <td>{{ ajax.email }}</td>
+                <td>{{ ajax.telephone }}</td>
+                <td>{{ ajax.created_at  |date:"d-m-Y H:i:s"}}</td>
+                <td ><a class="btn btn-sm btn-warning"><span class="fa fa-edit"></span> Edit</a> 
+                    <a class="btn btn-sm btn-danger delete" data-id="{{ ajax.id }}"><span class="fa fa-trash"></span> Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block javascript %}
+  <script>
+    $(document).ready(function() {
+        $('#example-form').submit(function(event) {
+            var text = $('#example-text-input').val();
+            var search = $('#example-search-input').val();
+            var email = $('#example-email-input').val();
+            var telephone = $('#example-tel-input').val();
+            $.ajax({
+                type : 'POST',
+                url  : 'ajax',
+                data :{
+                    'csrfmiddlewaretoken': '{{csrf_token}}',
+                    'text': text,
+                    'search': search,
+                    'email': email,
+                    'telephone': telephone,
+                },
+                dataType : 'json',
+                encode   : true
+            })
+            .done(function(data) {
+//                $("#example-form").trigger("reset");
+                $.get('getajax', function(response){ 
+                    
+                })
+                .done(function(datas) {
+                    $("#myTable > tbody").prepend("<tr id='table-" +datas.id+ "'>\n\
+                            <td>"+ datas.text +"</td><td>"+ datas.search +"</td>\n\
+                            <td>"+ datas.email +"</td><td>"+ datas.telephone +"</td>\n\
+                            <td>" +datas.created_at+ "</td><td><a class='btn btn-sm btn-warning'><span class='fa fa-edit'></span>Edit</a>\n\
+                            <a class='btn btn-sm btn-danger delete' data-id='"+ datas.id + "'><span class='fa fa-trash'></span> Delete</a> </td></tr>");
+                });
+            });
+            event.preventDefault();
+        });
+        $('.delete').click(function(event) {
+            console.log('deleted');
+            var id = $(this).attr("data-id");
+            $.get('delete', {id:id}, function(response){ 
+                var tabrow = '#table-'+id;
+                $(tabrow).remove();
+            });
+        });
+    });
+  </script>
+{% endblock %}

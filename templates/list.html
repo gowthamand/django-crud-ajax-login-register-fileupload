@@ -1,0 +1,66 @@
+{% extends 'layout/app.html' %}
+{% block body %}
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Crud Application</li>
+    <li class="breadcrumb-item"><a href="{% url 'create' %}" style="padding: 8px; background-color: green; color: white;">ADD</a></li>
+</ol>
+<div class="container card">
+    <div class="form-group"></div>
+    <br />
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    <table class="table table-bordered table-striped table-sm">
+        <thead class="alert-info">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Mobile Number</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Created At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.firstname }}</td>
+                <td>{{ member.lastname }}</td>
+                <td>{{ member.mobile_number }}</td>
+                <td>{{ member.description }}</td>
+                <td>{{ member.date|date:"d M, Y" }}</td>
+                <td>{{ member.created_at  |date:"d-m-Y H:i:s"}}</td>
+                <td><center><a class="btn btn-sm btn-warning" href="edit/{{ member.id }}"><span class="fa fa-edit"></span> Edit</a> 
+                    <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="fa fa-trash"></span> Delete</a></center></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if members.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ members.previous_page_number }}">Previous</a></li>
+            {% else %}    
+                <li class="page-item disabled"><a class="page-link">First</a></li>
+            {% endif %}    
+            {% if members.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ members.previous_page_number }}">{{ members.previous_page_number }}</a></li>
+            {% endif %}
+                <li class="page-item active"><a class="page-link" href="#">{{ members.number }}</a></li>
+            {% if members.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ members.next_page_number }}">{{ members.next_page_number }}</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ members.next_page_number }}">Next</a></li>
+            {% else %}    
+                <li class="page-item disabled"><a class="page-link">End</a></li>
+            {% endif %}    
+        </ul>
+    </nav>
+</div>
+{% endblock %}
