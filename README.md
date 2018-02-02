@@ -34,6 +34,8 @@
  9. python manage.py createsuperuser (enter username, email, password)
 
 ```
+# Dont't Forgot Give satr and fork
+
 ## Screen Shots
 
 [![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/1.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
