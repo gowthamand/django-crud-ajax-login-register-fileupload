@@ -7,6 +7,7 @@
     <li class="breadcrumb-item active">Ajax Crud</li>
 </ol>
 <div class="container card">
+    <p class="text-danger text-center" id="fails" style="display: none">Please Enter Valid Details</p>
     <form class="form-horizontal" id="example-form" action="ajax" method="POST">
         {% csrf_token %}
         <div class="form-group"></div>
@@ -97,14 +98,18 @@
                             <td>"+ datas.email +"</td><td>"+ datas.telephone +"</td>\n\
                             <td>" +datas.created_at+ "</td><td><a class='btn btn-sm btn-warning'><span class='fa fa-edit'></span>Edit</a>\n\
                             <a class='btn btn-sm btn-danger delete' data-id='"+ datas.id + "'><span class='fa fa-trash'></span> Delete</a> </td></tr>");
-                });
+                })
+                .fail(function() {
+                    $("#fails" ).show();
+                })
             });
+
             event.preventDefault();
         });
-        $('.delete').click(function(event) {
+        $(document).on('click','.delete',function(event) {
             console.log('deleted');
             var id = $(this).attr("data-id");
-            $.get('delete', {id:id}, function(response){ 
+            $.get('delete', {id:id}, function(response){
                 var tabrow = '#table-'+id;
                 $(tabrow).remove();
             });
