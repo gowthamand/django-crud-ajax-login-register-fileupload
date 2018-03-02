@@ -160,4 +160,23 @@ def register_success(request):
     return render_to_response(
     'success.html',
     )
- 
+
+@login_required
+def users(request):
+    users_list = User.objects.all()
+    paginator = Paginator(users_list, 5)
+    page = request.GET.get('page')
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+    return render(request, 'users.html', {'users': users})
+
+@login_required
+def user_delete(request, id):
+    user = User.objects.get(id=id)
+    user.delete()
+    messages.error(request, 'User was deleted successfully!')
+    return redirect('/users')

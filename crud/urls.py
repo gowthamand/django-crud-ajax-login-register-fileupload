@@ -16,4 +16,6 @@ urlpatterns = [
     url(r'^ajax/getajax$', views.getajax, name='getajax'),
     url(r'^register/$', views.register,name='register'),
     url(r'^register/success/$',views.register_success,name='register_success'),
+    url(r'^users/$',views.users,name='users'),
+    url(r'^users/delete/(?P<id>\d+)$', views.user_delete, name='user_delete'),
 ]
