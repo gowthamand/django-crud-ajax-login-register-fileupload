@@ -4,7 +4,7 @@
 [![dependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin/status.svg)](#)
 [![devDependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin/dev-status.svg)](#)
 
-# Django Crud, Ajax, Login, Register,Dashboard Etc 
+# <a>Django Crud, Ajax, Login, Register,Dashboard Etc </a>
 
 ### Status
 
