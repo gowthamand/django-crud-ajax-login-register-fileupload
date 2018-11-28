@@ -6,7 +6,7 @@
 
 # <a>Django Crud, Ajax, Login, Register,Dashboard Etc </a>
 
-### Live demo <a href="https://gowtham-django-app.herokuapp.com/">Click Here</a>
+### Live demo <a targer="_blank" href="https://gowtham-django-app.herokuapp.com/">Click Here</a>
 ##### username : gowthaman.nkl1@gmail.com , password : Welcome@123
 
 #### Key Features
