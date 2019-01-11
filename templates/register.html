@@ -3,45 +3,11 @@
 <div class="container">
     <div class="card card-register mx-auto mt-5">
         <div class="card-header">Register an Account</div>
+
         <div class="card-body">
             <form method="post" action=".">
                 {% csrf_token %}
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <label for="exampleInputName">First name</label>
-                            <input class="form-control" name="first_name" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="exampleInputLastName">Last name</label>
-                            <input class="form-control" name="last_name" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <label for="exampleInputName">Email address</label>
-                            <input class="form-control" name="email" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Email address">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="exampleInputLastName">Username</label>
-                            <input class="form-control" name="username" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter Username">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input class="form-control" name="password1" id="exampleInputPassword1" type="password" placeholder="Password">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="exampleConfirmPassword">Confirm password</label>
-                            <input class="form-control" name="password2" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
-                        </div>
-                    </div>
-                </div>
+                {% include 'includes/bs4_form.html' with form=form %}
                 <button class="btn btn-success btn-block">Register</button>
             </form>
             <div class="text-center">

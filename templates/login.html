@@ -6,25 +6,17 @@
         <div class="card-body">
             <form class="form-horizontal" role="form" method="POST">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Enter Username</label>
-                    <input class="form-control"type="text" name="username" id="id_username" placeholder="Username" aria-describedby="textHelp"autofocus>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" name="password" class="form-control" id="id_password" placeholder="Password" />
-                </div>
-                <div class="form-group">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox"> Remember Password</label>
-                    </div>
-                </div>
+                  {% include 'includes/bs4_form_all.html' with form=form %}
                 <button type="submit" class="btn btn-success btn-block"><i class="fa fa-sign-in"></i> Login</button>
             </form>
             <div class="text-center">
                 <a class="d-block small mt-3" href="/register">Register an Account</a>
                 <a class="d-block small" href="/password/reset">Forgot Password?</a>
+            </div>
+            <div>
+                <br>
+                <p><b>username </b>: gowthaman.nkl1@gmail.com <br>
+                <b>password </b>: Welcome@123</p>
             </div>
         </div>
     </div>

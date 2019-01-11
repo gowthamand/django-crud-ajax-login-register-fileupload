@@ -25,7 +25,7 @@ SECRET_KEY = '&-zjyiy6lhs85jc5x=vbbxzgffzvqld+78d2!#a305g%+mc@ac'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://django.co.in/','django.co.in','127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,24 +75,24 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
-#}
-
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'django',
-        'USER': 'root',
-        'PASSWORD': 'welcome',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
-} 
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+   }
+}
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'django',
+#         'USER': 'root',
+#         'PASSWORD': 'welcome',
+#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-\
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Kolkata'

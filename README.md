@@ -28,17 +28,19 @@
 
  3.  cd django-crud-ajax-login-register-fileupload
 
- 4. python3 manage.py migrate
+ 4. pip3 install -r requirements.txt
 
- 5. python3 manage.py makemigrations
+ 5. python3 manage.py migrate
 
- 6. python3 manage.py migrate
+ 6. python3 manage.py makemigrations
 
- 7. python3 manage.py runserver
+ 7. python3 manage.py migrate
 
- 8. Login to http://127.0.0.1:8000
+ 8. python3 manage.py runserver
 
- 9. python manage.py createsuperuser (enter username, email, password)
+ 9. Login to http://127.0.0.1:8000
+
+ 10. python manage.py createsuperuser (enter username, email, password)
 
 ```
 # Dont't Forgot Give satr and fork

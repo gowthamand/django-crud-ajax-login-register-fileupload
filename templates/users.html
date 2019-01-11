@@ -1,22 +1,22 @@
 {% extends 'layout/app.html' %}
 {% block body %}
-<!-- Breadcrumbs-->
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="/">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item active">Users</li>
-</ol>
-<div class="container card">
-    <div class="form-group"></div>
-    <br />
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-        {{ message }}
-    </div>
-    {% endfor %}
-    <table class="table table-bordered table-striped table-sm">
-        <thead class="alert-info">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Users</li>
+    </ol>
+    <div class="container card">
+        <div class="form-group"></div>
+        <br/>
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <table class="table table-bordered table-striped table-sm">
+            <thead class="alert-info">
             <tr>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -25,38 +25,48 @@
                 <th>Created At</th>
                 <th>Action</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {% for user in users %}
-            <tr>
-                <td>{{ user.first_name }}</td>
-                <td>{{ user.last_name }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.last_login |date:"d-m-Y H:i:s" }}</td>
-                <td>{{ user.date_joined  |date:"d-m-Y H:i:s"}}</td>
-                <td><center><a class="btn btn-sm btn-danger" href="delete/{{ user.id }}"><span class="fa fa-trash"></span> Delete</a></center></td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            {% if users.has_previous %}
-                <li class="page-item"><a class="page-link" href="?page={{ users.previous_page_number }}">Previous</a></li>
-            {% else %}
-                <li class="page-item disabled"><a class="page-link">First</a></li>
-            {% endif %}
-            {% if users.has_previous %}
-                <li class="page-item"><a class="page-link" href="?page={{ users.previous_page_number }}">{{ users.previous_page_number }}</a></li>
-            {% endif %}
+                <tr>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.last_login |date:"d-m-Y H:i:s" }}</td>
+                    <td>{{ user.date_joined  |date:"d-m-Y H:i:s" }}</td>
+                    {% if user.email == 'gowthaman.nkl1@gmail.com' %}
+                        <td><a class="btn btn-sm btn-success"><span class="fa fa-user"></span>Can't Delete</a></td>
+                    {% else %}
+                        <td><a class="btn btn-sm btn-danger" href="delete/{{ user.id }}"><span
+                                class="fa fa-trash"></span> Delete</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if users.has_previous %}
+                    <li class="page-item"><a class="page-link"
+                                             href="?page={{ users.previous_page_number }}">Previous</a></li>
+                {% else %}
+                    <li class="page-item disabled"><a class="page-link">First</a></li>
+                {% endif %}
+                {% if users.has_previous %}
+                    <li class="page-item"><a class="page-link"
+                                             href="?page={{ users.previous_page_number }}">{{ users.previous_page_number }}</a>
+                    </li>
+                {% endif %}
                 <li class="page-item active"><a class="page-link" href="#">{{ users.number }}</a></li>
-            {% if users.has_next %}
-                <li class="page-item"><a class="page-link" href="?page={{ users.next_page_number }}">{{ users.next_page_number }}</a></li>
-                <li class="page-item"><a class="page-link" href="?page={{ users.next_page_number }}">Next</a></li>
-            {% else %}
-                <li class="page-item disabled"><a class="page-link">End</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-</div>
+                {% if users.has_next %}
+                    <li class="page-item"><a class="page-link"
+                                             href="?page={{ users.next_page_number }}">{{ users.next_page_number }}</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="?page={{ users.next_page_number }}">Next</a></li>
+                {% else %}
+                    <li class="page-item disabled"><a class="page-link">End</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 {% endblock %}
