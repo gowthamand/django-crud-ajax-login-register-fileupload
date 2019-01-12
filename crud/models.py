@@ -26,10 +26,12 @@ class Ajax(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     
-#class Music(models.Model):    
-#    db_table = 'music_album'
-#    name = models.CharField(max_length=255, blank=True)
-#    created_at = models.DateTimeField()
-#    updated_at = models.DateTimeField()
+class CsvUpload(models.Model):
+   name = models.CharField(max_length=255, blank=True)
+   description = models.TextField(max_length=1000, blank=True)
+   start_date_time = models.DateTimeField()
+   end_date_time = models.DateTimeField()
+   notes = models.CharField(max_length=255, blank=True)
+
 
 
