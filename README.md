@@ -9,7 +9,7 @@
 ### Live demo <a target="_blank" href="https://gowtham-django-app.herokuapp.com/">Click Here</a>
 ##### username : gowthaman.nkl1@gmail.com , password : Welcome@123
 
-
+Save Developer for Feature Developement Please Donate a small Money <a href="https://paypal.me/gowthamdurai?locale.x=en_GB">Donate a 5$</a>
 
 #### Key Features
 - 1 . Register
