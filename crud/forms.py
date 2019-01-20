@@ -15,10 +15,17 @@ class RegistrationForm(forms.Form):
  
     def clean_username(self):
         try:
-            user = User.objects.get(username__iexact=self.cleaned_data['username'])
+            User.objects.get(username__iexact=self.cleaned_data['username'])
         except User.DoesNotExist:
             return self.cleaned_data['username']
         raise forms.ValidationError(_("The username already exists. Please try another one."))
+
+    def clean_email(self):
+        try:
+            User.objects.get(email__iexact=self.cleaned_data['email'])
+        except User.DoesNotExist:
+            return self.cleaned_data['email']
+        raise forms.ValidationError(_("The email already exists. Please try another one."))
  
     def clean(self):
         if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:

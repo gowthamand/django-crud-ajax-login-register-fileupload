@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Member, Document , Ajax
+from .models import Member, Document, Ajax, CsvUpload
 import datetime
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
 from crud.forms import *
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response
@@ -186,54 +185,63 @@ def user_delete(request, id):
 
 @login_required
 def upload_csv(request):
-    data = {}
-    if "GET" == request.method:
-        return render(request, "upload_csv.html", data)
-    # if not GET, then proceed
+    if 'GET' == request.method:
+        csv_list = CsvUpload.objects.all()
+        paginator = Paginator(csv_list, 7)
+        page = request.GET.get('page')
+        try:
+            csvdata = paginator.page(page)
+        except PageNotAnInteger:
+            csvdata = paginator.page(1)
+        except EmptyPage:
+            csvdata = paginator.page(paginator.num_pages)
+        return render(request, 'upload_csv.html', {'csvdata': csvdata})
     try:
         csv_file = request.FILES["csv_file"]
+
+        if len(csv_file) == 0:
+            messages.error(request, 'Empty File')
+            return render(request, 'upload_csv.html')
+
         if not csv_file.name.endswith('.csv'):
             messages.error(request, 'File is not CSV type')
-            # return HttpResponseRedirect(reverse("myapp:upload_csv"))
-        # if file is too large, return
+            return render(request, 'upload_csv.html')
+
         if csv_file.multiple_chunks():
-            messages.error(request, "Uploaded file is too big (%.2f MB)." % (csv_file.size / (1000 * 1000),))
-            # return HttpResponseRedirect(reverse("myapp:upload_csv"))
+            messages.error(request, 'Uploaded file is too big (%.2f MB).' % (csv_file.size / (1000 * 1000),))
+            return render(request, 'upload_csv.html')
 
         file_data = csv_file.read().decode("utf-8")
 
         lines = file_data.split("\n")
-        # loop over the lines and save them in db. If error , store as string and then display
-        for line in lines:
+        for index, line in enumerate(lines):
             fields = line.split(",")
-            data_dict = {}
-            data_dict["name"] = fields[0]
-            data_dict["start_date_time"] = fields[1]
-            data_dict["end_date_time"] = fields[2]
-            data_dict["notes"] = fields[3]
-            print(fields[0])
-            print(fields[1])
-            print(fields[2])
-            print(fields[3])
-            # try:
-            #     print('sssssssssssss')
-            #     # form = EventsForm(data_dict)
-            #     # if form.is_valid():
-            #     #     form.save()
-            #     else:
-            #         print('sssssssssssss')
-            #         # logging.getLogger("error_logger").error(form.errors.as_json())
-            # except Exception as e:
-            #     logging.getLogger("error_logger").error(repr(e))
-            #     pass
+            if index == 0:
+                if (fields[0] == 'name') and (fields[1] == 'description') and (fields[2] == 'end_date') and (fields[3] == 'notes'):
+                    pass
+                else:
+                    messages.error(request, 'File is not Correct Headers')
+                    return render(request, 'upload_csv.html')
+                    break
+            else:
+                print(index)
+                if (len(fields[0]) != 0) and (len(fields[1]) != 0) and (len(fields[2]) != 0) and (len(fields[3]) != 0):
+                    data = CsvUpload(
+                        name=fields[0],
+                        description=fields[1],
+                        end_date=datetime.datetime.now(),
+                        notes=fields[3]
+                    )
+                    data.save()
+        messages.success(request, "Successfully Uploaded CSV File")
+        return redirect('/upload/csv/')
 
     except Exception as e:
-        # logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
-        # messages.error(request, "Unable to upload file. " + repr(e))
-
-        return redirect('/')
+        messages.error(request, "Unable to upload file. " + e)
+        return redirect('/upload/csv/')
 
 
 @login_required
 def changePassword(request):
     print('changepasword')
+

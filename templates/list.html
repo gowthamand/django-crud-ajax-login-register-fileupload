@@ -30,17 +30,17 @@
         </thead>
         <tbody>
             {% for member in members %}
-            <tr>
-                <td>{{ member.firstname }}</td>
-                <td>{{ member.lastname }}</td>
-                <td>{{ member.mobile_number }}</td>
-                <td>{{ member.description }}</td>
-                <td>{{ member.date|date:"d M, Y" }}</td>
-                <td>{{ member.created_at  |date:"d-m-Y H:i:s"}}</td>
-                <td><center><a class="btn btn-sm btn-warning" href="edit/{{ member.id }}"><span class="fa fa-edit"></span> Edit</a> 
-                    <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="fa fa-trash"></span> Delete</a></center></td>
-        </tr>
-        {% endfor %}
+                <tr>
+                    <td>{{ member.firstname }}</td>
+                    <td>{{ member.lastname }}</td>
+                    <td>{{ member.mobile_number }}</td>
+                    <td>{{ member.description }}</td>
+                    <td>{{ member.date|date:"d M, Y" }}</td>
+                    <td>{{ member.created_at  |date:"d-m-Y H:i:s"}}</td>
+                    <td><a class="btn btn-sm btn-warning" href="edit/{{ member.id }}"><span class="fa fa-edit"></span> Edit</a>
+                        <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="fa fa-trash"></span> Delete</a></td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
     <nav aria-label="Page navigation example">

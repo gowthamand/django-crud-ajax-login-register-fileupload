@@ -1,4 +1,5 @@
 {% extends 'layout/app.html' %}
+{% load static %}
 {% block stylesheet %}
 <style>
 
@@ -9,25 +10,86 @@
         <li class="breadcrumb-item">
             <a href="/">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active"><a href="{% url 'list' %}">CSV Upload</a></li>
+        <li class="breadcrumb-item active"><a href="{% url 'upload_csv' %}">CSV Upload</a></li>
     </ol>
     <div class="container card">
+        <div class="form-group"></div>
+        <br/>
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
         <form action="{% url "upload_csv" %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
             {% csrf_token %}
             <div class="form-group"></div>
-            <div class="form-group">
+            <div class="form-group row">
                 <div class="col-md-6">
-                    <div class="custom-file">
-                        <input type="file" name="csv_file" id="csv_file" required="True" type="file" class="custom-file-input" id="customFile">
-                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    <div class="form-group">
+                        <input type="file" name="csv_file" id="input01" type="file">
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
                 <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
-                    <button class="btn btn-primary"><span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
+                    <button class="btn btn-primary"><span class="fa fa-upload" style="margin-right:5px;"></span>Upload</button>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3">
+                    <a class="btn-sm btn btn-success" href="{% static 'sample.csv' %}" download><span class="fa fa-download"></span> &nbsp;download sample CSV</a>
                 </div>
             </div>
         </form>
     </div>
+    <div class="container">
+         <h5 class="alert-success">Latest Data</h5>
+    </div>
+    <div class="container">
+        <table class="table table-sm">
+            <thead >
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">description</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for member in csvdata %}
+                <tr>
+                    <td>{{ member.id }}</td>
+                    <td>{{ member.name }}</td>
+                    <td>{{ member.description }}</td>
+                    <td>{{ member.end_date }}</td>
+                    <td>{{ member.notes }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-sm">
+            {% if csvdata.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ csvdata.previous_page_number }}">Previous</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link">First</a></li>
+            {% endif %}
+            {% if csvdata.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ csvdata.previous_page_number }}">{{ csvdata.previous_page_number }}</a></li>
+            {% endif %}
+                <li class="page-item active"><a class="page-link" href="#">{{ csvdata.number }}</a></li>
+            {% if csvdata.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ csvdata.next_page_number }}">{{ csvdata.next_page_number }}</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ csvdata.next_page_number }}">Next</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link">End</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'filestyle/bootstrap-filestyle.min.js' %}"></script>
+    <script type="text/javascript">
+        $('#input01').filestyle({
+            'placeholder' : 'Select CSV File'
+        });
+    </script>
 {% endblock %}

@@ -2,3 +2,14 @@ __pycache__
 crud/__pycache__/
 mysite/__pycache__/
 .idea
+crud/migrations
+
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+
+.env
+db.sqlite3

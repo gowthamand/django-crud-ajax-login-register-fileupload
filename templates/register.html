@@ -18,3 +18,13 @@
     </div>
 </div>
 {% endblock %}
+{% block javascript %}
+
+    <script type="text/javascript">
+        $("#id_username").attr("placeholder", "Enter Username");
+        $("#id_email").attr("placeholder", "Enter Email-ID");
+        $("#id_email").attr("placeholder", "Enter Email-ID");
+        $("#id_password1").attr("placeholder", "Enter Password");
+        $("#id_password2").attr("placeholder", "Eneter Password (again)");
+    </script>
+{% endblock %}

@@ -9,7 +9,9 @@
 ### Live demo <a target="_blank" href="https://gowtham-django-app.herokuapp.com/">Click Here</a>
 ##### username : gowthaman.nkl1@gmail.com , password : Welcome@123
 
-Save Developer for Feature Developement Please Donate a small Money <a href="https://paypal.me/gowthamdurai?locale.x=en_GB">Donate a 5$</a>
+Save Developer for Feature Developement Please Donate a small Money
+Make a donation to you as much as possible
+ <a href="https://paypal.me/gowthamdurai?locale.x=en_GB">Donate a 5$</a>
 
 #### Key Features
 - 1 . Register
@@ -42,13 +44,13 @@ Save Developer for Feature Developement Please Donate a small Money <a href="htt
 
  9. Login to http://127.0.0.1:8000
 
- 10. python manage.py createsuperuser (enter username, email, password)
+ 10. python3 manage.py createsuperuser (enter username, email, password)
 
 ```
-# Dont't Forgot Give satr and fork
+## Dont't Forgot do star and fork
 
 ## Screen Shots
 
 [![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/1.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
 
-# Now Django Project Ready
+## Now Django Project Ready
