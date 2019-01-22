@@ -237,11 +237,11 @@ def upload_csv(request):
         return redirect('/upload/csv/')
 
     except Exception as e:
-        messages.error(request, "Unable to upload file. " + e)
+        messages.error(request, "Unable to upload file")
         return redirect('/upload/csv/')
-
 
 @login_required
 def changePassword(request):
     print('changepasword')
+    return render(request, 'change_password.html')
 
