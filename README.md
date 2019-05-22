@@ -11,7 +11,7 @@
 
 Save Developer for Feature Developement Please Donate a small Money
 Make a donation to you as much as possible
- <a href="https://paypal.me/gowthamdurai?locale.x=en_GB">Donate a 5$</a>
+ <a href="https://paypal.me/gowthamdurai?locale.x=en_GB">Donate a 1$</a>
 
 #### Key Features
 - 1 . Register
