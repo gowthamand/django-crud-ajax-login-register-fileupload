@@ -6,12 +6,10 @@
 
 # <a>Django Crud, Ajax, Login, Register,Dashboard Etc </a>
 
-### Live demo <a target="_blank" href="https://gowtham-django-app.herokuapp.com/">Click Here</a>
+### Live demo <a target="_blank" href="https://gowtham-django-crud.herokuapp.com/">Click Here</a>
 ##### username : gowthaman.nkl1@gmail.com , password : Welcome@123
 
-Save Developer for Feature Developement Please Donate a small Money
-Make a donation to you as much as possible
- <a href="https://paypal.me/gowthamdurai?locale.x=en_GB">Donate a 1$</a>
+
 
 #### Key Features
 - 1 . Register
@@ -44,13 +42,28 @@ Make a donation to you as much as possible
 
  9. Login to http://127.0.0.1:8000
 
- 10. python3 manage.py createsuperuser (enter username, email, password)
+ 10. python manage.py createsuperuser (enter username, email, password)
 
 ```
-## Dont't Forgot do star and fork
+# Dont't Forgot Give satr and fork
 
 ## Screen Shots
 
 [![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/1.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
 
-## Now Django Project Ready
+[![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/2.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
+
+[![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/3.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
+
+[![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/4.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
+
+[![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/5.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
+
+[![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/6.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
+
+[![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/7.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
+
+[![SB Admin Preview](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/blob/master/screen_shots/8.png)](https://github.com/gowthamand/django-crud-ajax-login-register-fileupload/)
+
+
+# Now Django Project Ready

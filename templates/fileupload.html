@@ -1,101 +1,92 @@
 {% extends 'layout/app.html' %}
 {% block stylesheet %}
 <style>
-    .btn.btn-info {
-        background-color: $purple;
-        border-color: $purple;
-        outline: none;
-        &:hover {
-            background-color: darken($purple, 10%);
-            border-color: darken($purple, 10%);
-        }
-        &:active, &:focus {
-            background-color: lighten($purple, 5%);
-            border-color: lighten($purple, 5%);
-        }
-    }
 </style>
 {% endblock %}
 {% block body %}
-<!-- Breadcrumbs-->
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="/">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item active">File Upload</li>
-</ol>
-<div class="container card">
-    <div class="form-group row">
-
-    </div>
-    <div class="">
-        <form action="fileupload" class="form-horizontal" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group row">
-                <label for="lgFormGroupInput" class="col-sm-2 col-form-label">Files</label>
-                <div class="form-group col-md-6">
-                    <div class="input-group">
-                        <input type="file" name="myfile" class="file" style="display: none">
-                        <span class="input-group-btn">
-                            <button class="browse btn btn-info input-lg" type="button">Browse &hellip;</button>
-                        </span>
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
-                        <input type="text" class="form-control input-lg" readonly="" placeholder="Upload Image">
-                    </div>
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">File Upload</li>
+            </ol>
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                    {{ message }}
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="lgFormGroupInput" class="col-sm-2 col-form-label">Comments</label>
-                <div class="col-sm-6">
-                    <textarea class="form-control" name="description" rows="1"></textarea>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="lgFormGroupInput" class="col-sm-2 col-form-label col-form-label-lg"></label>
-                <div class="col-sm-6">
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </div>
-            </div>
-        </form>
-        <br />
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-        <table class="table table-bordered table-striped table-sm">
-            <thead class="alert-warning">
-                <tr>
-                    <th>Description</th>
-                    <th>File Name</th>
-                    <th>Created At</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for document in documents %}
-                <tr>
-                    <td>{{ document.description }}</td>
-                    <td>{{ document.document }}</td>
-                    <td>{{ document.uploaded_at }}</td>
-                    <td><center><a class="btn btn-sm btn-warning" href="#"><span class="fa fa-edit"></span> Edit</a> 
-                        <a class="btn btn-sm btn-danger" href="#"><span class="fa fa-trash"></span> Delete</a></center></td>
-            </tr>
             {% endfor %}
-            </tbody>
-        </table>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    File Upload
+                </div>
+                <div class="card-body">
+                    <form action="fileupload" class="form-horizontal" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-lg">
+                                        <div class="custom-file">
+                                            <input type="file" class="form-control custom-file-input file" name="myfile" id="fileInput">
+                                            <label class="custom-file-label" id="fileLabel" for="fileInput">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-lg">
+                                        <div class="custom-file">
+                                            <input type="text" class="form-control" name="description" placeholder="Description" id="inputFirst" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
+                    </form>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    File List
+                </div>
+                <div class="table">
+                    <table class="table table-bordered"  width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>File Name</th>
+                            <th>Created At</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for document in documents %}
+                            <tr>
+                                <td>{{ document.description }}</td>
+                                <td>{{ document.document }}</td>
+                                <td>{{ document.uploaded_at }}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" href="file/delete/{{ document.id }}"><span class="fa fa-trash"></span>&nbsp;Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 {% endblock %}
 {% block javascript %}
-<script>
-    $(document).on('click', '.browse', function () {
-        var file = $(this).parent().parent().parent().find('.file');
-        file.trigger('click');
-    });
-    $(document).on('change', '.file', function () {
-        $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
-    });
-</script>
-
+    <script>
+        $(document).on('change', '.file', function (event) {
+            document.getElementById('fileLabel').innerHTML = event.target.files[0].name;
+        });
+    </script>
 {% endblock %}

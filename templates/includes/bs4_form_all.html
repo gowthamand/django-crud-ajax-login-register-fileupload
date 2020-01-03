@@ -13,25 +13,27 @@
 {% endif %}
 {% for field in form.visible_fields %}
     <div class="form-group">
-        {{ field.label_tag }}
-
-        {% if form.is_bound %}
-            {% if field.errors %}
-                {% render_field field class="form-control is-invalid" %}
-                {% for error in field.errors %}
-                    <div class="invalid-feedback">
-                        {{ error }}
-                    </div>
-                {% endfor %}
+        <div class="form-label-group">
+            {% if form.is_bound %}
+                {% if field.errors %}
+                    {% render_field field class="form-control is-invalid" %}
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% render_field field class="form-control is-valid" %}
+                {% endif %}
             {% else %}
-                {% render_field field class="form-control is-valid" %}
+                {% render_field field class="form-control" %}
             {% endif %}
-        {% else %}
-            {% render_field field class="form-control" %}
-        {% endif %}
+            {{ field.label_tag }}
 
-        {% if field.help_text %}
-            <small class="form-text text-muted">{{ field.help_text }}</small>
-        {% endif %}
+
+            {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+        </div>
     </div>
 {% endfor %}

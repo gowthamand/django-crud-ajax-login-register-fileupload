@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="icon" href="../../favicon.ico">
 
-        <title>Gowthaman Login </title>
+<head>
 
-        <!-- Bootstrap core CSS -->
-        {% load static %}
-        <!--dynamic style-->
-        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
-        <!-- Custom fonts for this template-->
-        <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
-        <!-- Custom styles for this template-->
-        <link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.css' %}" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    {% block title %}{% endblock %}
+    <title>SB Admin - Login</title>
 
-        {% block stylesheet %}{% endblock %}
-    </head>
-    <body class="bg-dark">
-        {% block body %}{% endblock %} 
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!--Dynamic Javascript-->
-        <script type="text/javascript" src="{% static 'jquery/jquery.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-        <!-- Core plugin JavaScript-->
-        <script type="text/javascript" src="{% static 'jquery-easing/jquery.easing.min.js' %}"></script>
-        {% block javascript %}{% endblock %}
-    </body>
+    {% load static %}
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+    {% block stylesheet %}{% endblock %}
+
+</head>
+
+<body class="bg-dark">
+
+   {% block body %}{% endblock %}
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+{% block javascript %}{% endblock %}
+</body>
+
 </html>

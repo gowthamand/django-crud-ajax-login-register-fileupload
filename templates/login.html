@@ -1,4 +1,6 @@
 {% extends 'layout/login.html' %}
+
+{% load static %}
 {% block body %}
     <div class="container">
         <div class="card card-login mx-auto mt-5">
@@ -7,22 +9,22 @@
                 <form class="form-horizontal" role="form" method="POST">
                     {% csrf_token %}
                     {% include 'includes/bs4_form_all.html' with form=form %}
-                    <button type="submit" class="btn btn-success btn-block"><i class="fa fa-sign-in"></i> Login</button>
+                    <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in"></i> Login</button>
                 </form>
                 <div class="text-center">
                     <a class="d-block small mt-3" href="/register">Register an Account</a>
                     <a class="d-block small" href="/password/reset">Forgot Password?</a>
                 </div>
+                <div class="card-header">
+                <p>
+                    <b>username </b>: gowthaman.nkl1@gmail.com <br>
+                    <b>password </b>: Welcome@123
+                </p>
             </div>
-            <div class="card-header">
-                <p><b>username </b>: gowthaman.nkl1@gmail.com <br>
-                        <b>password </b>: Welcome@123</p>
             </div>
         </div>
     </div>
 {% endblock %}
-
-
 {% block javascript %}
     <script type="text/javascript">
         $("#id_username").attr("placeholder", "Enter Username");

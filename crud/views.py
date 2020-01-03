@@ -8,14 +8,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from crud.forms import *
 from django.views.decorators.csrf import csrf_protect
-from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
 @login_required
 def index(request):
     return render(request, 'index.html')
+
 
 @login_required
 def list(request):
@@ -34,13 +35,14 @@ def list(request):
 def create(request):
     if request.method == 'POST':
         member = Member(
-        firstname=request.POST['firstname'],
-        lastname=request.POST['lastname'],
-        mobile_number=request.POST['mobile_number'],
-        description=request.POST['description'],
-        date=request.POST['date'],
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(), )
+            firstname=request.POST['firstname'],
+            lastname=request.POST['lastname'],
+            mobile_number=request.POST['mobile_number'],
+            description=request.POST['description'],
+            location=request.POST['location'],
+            date=request.POST['date'],
+            created_at=datetime.datetime.now(),
+            updated_at=datetime.datetime.now(), )
         try:
             member.full_clean()
         except ValidationError as e:
@@ -51,20 +53,22 @@ def create(request):
     else:
         return render(request, 'add.html')
 
-@login_required    
+@login_required
 def edit(request, id):
     members = Member.objects.get(id=id)
     context = {'members': members}
     return render(request, 'edit.html', context)
+
 
 @login_required
 def update(request, id):
     member = Member.objects.get(id=id)
     member.firstname = request.POST['firstname']
     member.lastname = request.POST['lastname']
-    mobile_number=request.POST['mobile_number'],
-    description=request.POST['description'],
-    date=request.POST['date'],
+    member.mobile_number = request.POST['mobile_number'],
+    member.description = request.POST['description'],
+    member.location = request.POST['location'],
+    member.date = request.POST['date'],
     member.save()
     messages.success(request, 'Member was updated successfully!')
     return redirect('/list')
@@ -76,15 +80,16 @@ def delete(request, id):
     messages.error(request, 'Member was deleted successfully!')
     return redirect('/list')
 
+
 @login_required
 def fileupload(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         fs = FileSystemStorage()
         document = Document(
-        description=request.POST['description'],
-        document=myfile.name, 
-        uploaded_at=datetime.datetime.now(),)
+            description=request.POST['description'],
+            document=myfile.name,
+            uploaded_at=datetime.datetime.now(), )
         document.save()
         messages.success(request, 'Member was created successfully!')
         filename = fs.save(myfile.name, myfile)
@@ -95,17 +100,18 @@ def fileupload(request):
         context = {'documents': documents}
     return render(request, 'fileupload.html', context)
 
+
 @login_required
 def ajax(request):
     if request.method == 'POST':
         if request.is_ajax():
             data = Ajax(
-            text=request.POST['text'],
-            search=request.POST['search'],
-            email=request.POST['email'],
-            telephone=request.POST['telephone'],
-            created_at=datetime.datetime.now(),
-            updated_at=datetime.datetime.now(), 
+                text=request.POST['text'],
+                search=request.POST['search'],
+                email=request.POST['email'],
+                telephone=request.POST['telephone'],
+                created_at=datetime.datetime.now(),
+                updated_at=datetime.datetime.now(),
             )
             data.save()
             astr = "<html><b> you sent an ajax post request </b> <br> returned data: %s</html>" % data
@@ -113,7 +119,8 @@ def ajax(request):
     else:
         ajax_list = Ajax.objects.order_by('-created_at')
         context = {'ajax_list': ajax_list}
-    return render(request, 'ajax.html',  {'ajax_list': ajax_list})
+    return render(request, 'ajax.html', {'ajax_list': ajax_list})
+
 
 @csrf_protect
 def getajax(request):
@@ -121,22 +128,24 @@ def getajax(request):
         if request.is_ajax():
             data = Ajax.objects.order_by('-created_at').first()
             created = data.created_at.strftime('%m-%d-%Y %H:%M:%S')
-            datas = {"id": data.id, "text": data.text, "search": data.search, "email": data.email, "telephone": data.telephone, "created_at": created}
+            datas = {"id": data.id, "text": data.text, "search": data.search, "email": data.email,
+                     "telephone": data.telephone, "created_at": created}
             return JsonResponse(datas)
     else:
         return JsonResponse({'data': 'failure'})
-  
+
+
 @csrf_protect
 def ajax_delete(request):
     if request.method == 'GET':
         if request.is_ajax():
-            id=request.GET['id']
+            id = request.GET['id']
             ajax = Ajax.objects.get(id=id)
             ajax.delete()
             return JsonResponse({'data': 'success'})
     else:
         return JsonResponse({'data': 'failure'})
-  
+
 
 @csrf_protect
 def register(request):
@@ -144,24 +153,22 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(
-            username=form.cleaned_data['username'],
-            password=form.cleaned_data['password1'],
-            is_staff=True,
-            is_active=True,
-            is_superuser=True,
-            email=form.cleaned_data['email'],
-            first_name=form.cleaned_data['first_name'],
-            last_name=form.cleaned_data['last_name']
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+                is_staff=True,
+                is_active=True,
+                is_superuser=True,
+                email=form.cleaned_data['email'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name']
             )
             return HttpResponseRedirect('/register/success/')
     else:
         form = RegistrationForm()
     return render(request, 'register.html', {'form': form})
- 
+
 def register_success(request):
-    return render_to_response(
-    'success.html',
-    )
+    return render(request, 'success.html')
 
 @login_required
 def users(request):
@@ -186,16 +193,19 @@ def user_delete(request, id):
 @login_required
 def upload_csv(request):
     if 'GET' == request.method:
-        csv_list = CsvUpload.objects.all()
-        paginator = Paginator(csv_list, 7)
-        page = request.GET.get('page')
-        try:
-            csvdata = paginator.page(page)
-        except PageNotAnInteger:
-            csvdata = paginator.page(1)
-        except EmptyPage:
-            csvdata = paginator.page(paginator.num_pages)
-        return render(request, 'upload_csv.html', {'csvdata': csvdata})
+        # csv_list = CsvUpload.objects.all()
+        # paginator = Paginator(csv_list, 7)
+        # page = request.GET.get('page')
+        # try:
+        #     csvdata = paginator.page(page)
+        # except PageNotAnInteger:
+        #     csvdata = paginator.page(1)
+        # except EmptyPage:
+        #     csvdata = paginator.page(paginator.num_pages)
+        # return render(request, 'upload_csv.html', {'csvdata': csvdata})
+        csvdata = CsvUpload.objects.all()
+        context = {'csvdata': csvdata}
+        return render(request, 'upload_csv.html', context)
     try:
         csv_file = request.FILES["csv_file"]
 
@@ -217,7 +227,8 @@ def upload_csv(request):
         for index, line in enumerate(lines):
             fields = line.split(",")
             if index == 0:
-                if (fields[0] == 'name') and (fields[1] == 'description') and (fields[2] == 'end_date') and (fields[3] == 'notes'):
+                if (fields[0] == 'name') and (fields[1] == 'description') and (fields[2] == 'end_date') and (
+                        fields[3] == 'notes'):
                     pass
                 else:
                     messages.error(request, 'File is not Correct Headers')
@@ -237,11 +248,19 @@ def upload_csv(request):
         return redirect('/upload/csv/')
 
     except Exception as e:
-        messages.error(request, "Unable to upload file")
+        messages.error(request, "Unable to upload file. " + e)
         return redirect('/upload/csv/')
+
 
 @login_required
 def changePassword(request):
     print('changepasword')
     return render(request, 'change_password.html')
 
+
+@login_required
+def deleteFiles(request, id):
+    file = Document.objects.get(id=id)
+    file.delete()
+    messages.error(request, 'User was deleted successfully!')
+    return redirect('/fileupload')

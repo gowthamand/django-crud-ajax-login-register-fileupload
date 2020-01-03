@@ -1,30 +1,35 @@
 {% extends 'layout/login.html' %}
-{% block body %}
-<div class="container">
-    <div class="card card-register mx-auto mt-5">
-        <div class="card-header">Register an Account</div>
 
-        <div class="card-body">
-            <form method="post" action=".">
-                {% csrf_token %}
-                {% include 'includes/bs4_form.html' with form=form %}
-                <button class="btn btn-success btn-block">Register</button>
-            </form>
-            <div class="text-center">
-                <a class="d-block small mt-3" href="/login">Login Page</a>
-                <a class="d-block small" href="/password/reset">Forgot Password?</a>
+{% load static %}
+{% block stylesheet %}
+    <style>
+        .col-md-6 {
+            padding: 7px;
+        }
+    </style>
+
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">Register an Account</div>
+            <div class="card-body">
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    {% include 'includes/bs4_form.html' with form=form %}
+                    <button class="btn btn-primary btn-block">Register</button>
+                </form>
+                <div class="text-center">
+                    <a class="d-block small mt-3" href="/login">Login Page</a>
+                    <a class="d-block small" href="/password/reset">Forgot Password?</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 {% block javascript %}
-
     <script type="text/javascript">
         $("#id_username").attr("placeholder", "Enter Username");
-        $("#id_email").attr("placeholder", "Enter Email-ID");
-        $("#id_email").attr("placeholder", "Enter Email-ID");
-        $("#id_password1").attr("placeholder", "Enter Password");
-        $("#id_password2").attr("placeholder", "Eneter Password (again)");
+        $("#id_password").attr("placeholder", "Enter Password");
     </script>
 {% endblock %}

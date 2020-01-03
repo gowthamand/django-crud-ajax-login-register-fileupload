@@ -1,7 +1,6 @@
 from . import views
 from django.conf.urls import url
 
-
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^create$', views.create, name='create'),
@@ -20,4 +19,6 @@ urlpatterns = [
     url(r'^users/delete/(?P<id>\d+)$', views.user_delete, name='user_delete'),
     url(r'^upload/csv/$', views.upload_csv, name='upload_csv'),
     url(r'^change_password$', views.changePassword, name='changePassword'),
+    url(r'^file/delete$', views.changePassword, name='changePassword'),
+    url(r'^file/delete/(?P<id>\d+)$', views.deleteFiles, name='deleteFiles'),
 ]
