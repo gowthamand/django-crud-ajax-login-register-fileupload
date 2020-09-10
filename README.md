@@ -4,6 +4,7 @@
 [![dependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin/status.svg)](#)
 [![devDependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin/dev-status.svg)](#)
 
+
 # <a>Django Crud, Ajax, Login, Register,Dashboard Etc </a>
 
 ### Live demo <a target="_blank" href="https://gowtham-django-crud.herokuapp.com/">Click Here</a>
