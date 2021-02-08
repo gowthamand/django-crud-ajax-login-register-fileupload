@@ -6,7 +6,7 @@ django-heroku==0.3.1
 django-widget-tweaks==1.4.3
 gunicorn==20.0.4
 psycopg2-binary
-httplib2==0.18.0
+httplib2==0.19.0
 idna==2.6
 keyring==10.6.0
 keyrings.alt==3.0
