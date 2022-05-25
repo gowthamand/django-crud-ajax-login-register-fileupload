@@ -28,7 +28,7 @@ psycopg2==2.8.4
 pycairo==1.16.2
 pycrypto==2.6.1
 pycups==1.9.73
-PyJWT==1.7.1
+PyJWT==2.4.0
 pymacaroons==0.13.0
 PyNaCl==1.1.2
 pyRFC3339==1.0
