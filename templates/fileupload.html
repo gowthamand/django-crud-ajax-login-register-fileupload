@@ -1,84 +1,75 @@
 {% extends 'layout/app.html' %}
-{% block stylesheet %}
-<style>
-</style>
-{% endblock %}
+{% load static %}
 {% block body %}
-    <div id="content-wrapper">
-        <div class="container-fluid">
-            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#">Dashboard</a>
-                </li>
-                <li class="breadcrumb-item active">File Upload</li>
-            </ol>
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    File Upload
-                </div>
-                <div class="card-body">
-                    <form action="fileupload" class="form-horizontal" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="input-group input-group-lg">
-                                        <div class="custom-file">
-                                            <input type="file" class="form-control custom-file-input file" name="myfile" id="fileInput">
-                                            <label class="custom-file-label" id="fileLabel" for="fileInput">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-group input-group-lg">
-                                        <div class="custom-file">
-                                            <input type="text" class="form-control" name="description" placeholder="Description" id="inputFirst" required>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">File Upload</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item active">File Upload</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                File Upload
+            </div>
+            <div class="card-body">
+                <form action="fileupload" class="form-horizontal" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control custom-file-input file" name="myfile" id="fileInput">
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
-                    </form>
-                </div>
+                        <div class="col-3">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="description" placeholder="Description" id="inputFirst" required>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group mb-3">
+                                <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    File List
-                </div>
-                <div class="table">
-                    <table class="table table-bordered"  width="100%" cellspacing="0">
-                        <thead>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                File List
+            </div>
+            <div class="card-body">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>File Name</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for document in documents %}
                         <tr>
-                            <th>Description</th>
-                            <th>File Name</th>
-                            <th>Created At</th>
-                            <th>Action</th>
+                            <td>{{ document.id }}</td>
+                            <td>{{ document.description }}</td>
+                            <td>{{ document.document }}</td>
+                            <td>{{ document.uploaded_at }}</td>
+                            <td>
+                                <a class="btn btn-sm btn-danger" href="file/delete/{{ document.id }}"><span class="fa fa-trash"></span>&nbsp;Delete</a>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for document in documents %}
-                            <tr>
-                                <td>{{ document.description }}</td>
-                                <td>{{ document.document }}</td>
-                                <td>{{ document.uploaded_at }}</td>
-                                <td>
-                                    <a class="btn btn-sm btn-danger" href="file/delete/{{ document.id }}"><span class="fa fa-trash"></span>&nbsp;Delete</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

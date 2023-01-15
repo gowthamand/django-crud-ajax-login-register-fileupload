@@ -3,67 +3,59 @@
 {% load static %}
 
 {% block body %}
-    <div id="content-wrapper">
-
-        <div class="container-fluid">
-            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#">Dashboard</a>
-                </li>
-                <li class="breadcrumb-item active">CRUD</li>
-            </ol>
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    CRUD List
-                    <a  class="btn btn-sm btn-success" href="{% url 'create' %}" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
-                </div>
-                <div class="card-body">
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Mobile Number</th>
-                                <th>Description</th>
-                                <th>Location</th>
-                                <th>Created At</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for member in members %}
-                                <tr>
-                                    <td>{{ member.firstname }}</td>
-                                    <td>{{ member.lastname }}</td>
-                                    <td>{{ member.mobile_number }}</td>
-                                    <td>{{ member.description }}</td>
-                                    <td>{{ member.location }}</td>
-                                    <td>{{ member.created_at  |date:"d-m-Y H:i:s" }}</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-warning" href="edit/{{ member.id }}"> <span class="fa fa-edit"></span> Edit</a>
-                                        <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="fa fa-trash"></span> Delete</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">CRUD</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item active">CRUD</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                CRUD List
+                <a class="btn btn-sm btn-success" href="{% url 'create' %}" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
+            </div>
+            <div class="card-body">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                        {{ message }}
                     </div>
-                </div>
+                {% endfor %}
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Mobile Number</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for member in members %}
+                        <tr>
+                            <td>{{ member.id }}</td>
+                            <td>{{ member.firstname }}</td>
+                            <td>{{ member.lastname }}</td>
+                            <td>{{ member.mobile_number }}</td>
+                            <td>{{ member.description }}</td>
+                            <td>{{ member.location }}</td>
+                            <td>{{ member.created_at  |date:"d-m-Y H:i:s" }}</td>
+                            <td>
+                                <a class="btn btn-sm btn-warning" href="edit/{{ member.id }}"> <span class="fa fa-edit"></span> Edit</a>
+                                <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="fa fa-trash"></span> Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 {% endblock %}
 {% block javascript %}
-    <script type="text/javascript">
-        $("#id_username").attr("placeholder", "Enter Username");
-        $("#id_password").attr("placeholder", "Enter Password");
-    </script>
+
 {% endblock %}

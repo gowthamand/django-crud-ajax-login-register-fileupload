@@ -14,29 +14,26 @@
 <div class="form-group">
     <div class="form-row">
         {% for field in form.visible_fields %}
-            <div class="col-md-6">
-                <div class="form-label-group">
-                    {% if form.is_bound %}
-                        {% if field.errors %}
-                            {% render_field field class="form-control is-invalid" %}
-                            {% for error in field.errors %}
-                                <div class="invalid-feedback">
-                                    {{ error }}
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            {% render_field field class="form-control is-valid" %}
-                        {% endif %}
+            <div class="form-floating mb-3">
+                {% if form.is_bound %}
+                    {% if field.errors %}
+                        {% render_field field class="form-control is-invalid" %}
+                        {% for error in field.errors %}
+                            <div class="invalid-feedback">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
                     {% else %}
-                        {% render_field field class="form-control" %}
+                        {% render_field field class="form-control is-valid" %}
                     {% endif %}
-                    {{ field.label_tag }}
+                {% else %}
+                    {% render_field field class="form-control" placeholder=field.label %}
+                {% endif %}
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
 
-
-                    {% if field.help_text %}
-                        <small class="form-text text-muted">{{ field.help_text }}</small>
-                    {% endif %}
-                </div>
+                {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

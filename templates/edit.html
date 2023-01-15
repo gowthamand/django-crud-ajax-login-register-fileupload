@@ -1,81 +1,83 @@
 {% extends 'layout/app.html' %}
 
 {% load static %}
-
+{% block stylesheet %}
+    <style>
+        .bd-example {
+            padding: 1.5rem;
+            margin-right: 0;
+            margin-left: 0;
+            border-width: 1px;
+            border-top-left-radius: .25rem;
+            border-top-right-radius: .25rem;
+        }
+        .bd-example {
+            position: relative;
+            padding: 1rem;
+            margin: 1rem -.75rem 0;
+            border: solid #dee2e6;
+            border-width: 1px;
+        }
+    </style>
+{% endblock %}
 {% block body %}
-    <div id="content-wrapper">
-
-        <div class="container-fluid">
-            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#">CRUD</a>
-                </li>
-                <li class="breadcrumb-item active">Add</li>
-            </ol>
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    Crud Add
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">CRUD</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item active">Add CRUD</li>
+        </ol>
+        <div class="bd-example">
+            <form action="update/{{ members.id }}" method="POST">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input class="form-control" id="inputFirstName" type="text" value="{{ members.firstname }}" name="firstname" placeholder="Enter your first name"/>
+                            <label for="inputFirstName">Enter First name</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input class="form-control" id="inputLastName" type="text" value="{{ members.lastname }}" name="lastname" placeholder="Enter your last name"/>
+                            <label for="inputLastName">Enter Last name</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <form class="form-horizontal" action="update/{{ members.id }}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="form-label-group">
-                                    <input type="text" class="form-control" value="{{ members.firstname }}" name="firstname" placeholder="First Name" id="inputFirst" required>
-                                    <label for="inputFirst">First Name</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-label-group">
-                                    <input type="text" class="form-control" value="{{ members.firstname }}" name="lastname" placeholder="Last Name" id="inputLast" required>
-                                    <label for="inputLast">Last Name</label>
-                                </div>
-                            </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input class="form-control" name="description" type="text"  value="{{ members.description }}" placeholder="Description" id="inputdescription" required>
+                            <label for="inputdescription">Enter Description</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="form-label-group">
-                                    <input type="text" class="form-control" value="{{ members.description }}" name="description" placeholder="Description" id="inputdescription" required>
-                                    <label for="inputdescription">Description</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-label-group">
-                                    <input class="form-control" type="tel" value="{{ members.mobile_number }}" name="mobile_number" placeholder="Mobile Number" id="inputMobile">
-                                    <label for="inputMobile">Mobile Number</label>
-                                </div>
-                            </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input class="form-control" name="mobile_number"  type="tel" value="{{ members.mobile_number }}" placeholder="Mobile Number" id="inputMobile">
+                            <label for="inputMobile">Enter Mobile Number</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="form-label-group">
-                                    <input class="form-control" type="date" name="date" value="{{ members.date }}" id="dateInput">
-                                    <label for="dateInput">Enter Emp ID</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-label-group">
-                                    <input type="text" id="inputLoca" class="form-control" value="{{ members.date }}"  placeholder="Enter Location" required="">
-                                    <label for="inputLoca">Enter Location</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
-                </form>
                 </div>
-            </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input class="form-control" type="date" name="date" value="{{ members.date }}" id="dateInput">
+                            <label for="dateInput">Enter Emp Date</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" name="location" id="inputLocation" value="{{ members.location }}" class="form-control" placeholder="Enter Location" required="">
+                            <label for="inputLocation">Enter Location</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 mb-0">
+                    <div class="d-grid"><button class="btn btn-primary btn-block" type="submit">Submit</button></div>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}
 {% block javascript %}
-
 {% endblock %}

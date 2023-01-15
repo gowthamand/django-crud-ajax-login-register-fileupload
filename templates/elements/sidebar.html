@@ -1,46 +1,49 @@
-<ul class="sidebar navbar-nav">
-    <li class="nav-item active">
-        <a class="nav-link" href="{% url 'home' %}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'list' %}">
-            <i class="fas fa-fw fa-database"></i>
-            <span>CRUD App</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'fileupload' %}">
-            <i class="fas fa-fw fa-table"></i>
-            <span>File Upload</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'ajax' %}">
-            <i class="fas fa-fw fa-bullseye"></i>
-            <span>Ajax Crud</span>
-        </a>
-    </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Users</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="{% url 'users' %}">User List</a>
+<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <div class="sb-sidenav-menu">
+        <div class="nav">
+            <div class="sb-sidenav-menu-heading">Core</div>
+            <a class="nav-link" href="{% url 'home' %}">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Dashboard
+            </a>
+            <a class="nav-link" href="{% url 'list' %}">
+                <div class="sb-nav-link-icon"><i class="fas fa-fw fa-database"></i></div>
+                CRUD App
+            </a>
+            <a class="nav-link" href="{% url 'fileupload' %}">
+                <div class="sb-nav-link-icon"><i class="fas fa-fw fa-tables"></i></div>
+                File Upload
+            </a>
+            <a class="nav-link" href="{% url 'ajax' %}">
+                <div class="sb-nav-link-icon"><i class="fas fa-fw fa-bullseye"></i></div>
+                Ajax Crud
+            </a>
+            <div class="sb-sidenav-menu-heading">Interface</div>
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                Users
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="{% url 'users' %}">User List</a>
+                </nav>
+            </div>
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                Other
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                        CSV Upload
+                    </a>
+                    <a class="nav-link collapsed" href="#" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                        Change Password
+                    </a>
+                </nav>
+            </div>
         </div>
-    </li>
-     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-file"></i>
-            <span>More Freature</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="{% url 'upload_csv' %}">CSV Import</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
-        </div>
-    </li>
-</ul>
+    </div>
+</nav>

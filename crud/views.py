@@ -1,3 +1,5 @@
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Member, Document, Ajax, CsvUpload
 import datetime
@@ -13,6 +15,8 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
+
+# Create your views here.
 @login_required
 def index(request):
     return render(request, 'index.html')
@@ -65,10 +69,10 @@ def update(request, id):
     member = Member.objects.get(id=id)
     member.firstname = request.POST['firstname']
     member.lastname = request.POST['lastname']
-    member.mobile_number = request.POST['mobile_number'],
-    member.description = request.POST['description'],
-    member.location = request.POST['location'],
-    member.date = request.POST['date'],
+    member.mobile_number = request.POST['mobile_number']
+    member.description = request.POST['description']
+    member.location = request.POST['location']
+    member.date = request.POST['date']
     member.save()
     messages.success(request, 'Member was updated successfully!')
     return redirect('/list')
@@ -77,7 +81,7 @@ def update(request, id):
 def delete(request, id):
     member = Member.objects.get(id=id)
     member.delete()
-    messages.error(request, 'Member was deleted successfully!')
+    messages.warning(request, 'Member was deleted successfully!')
     return redirect('/list')
 
 
@@ -91,7 +95,7 @@ def fileupload(request):
             document=myfile.name,
             uploaded_at=datetime.datetime.now(), )
         document.save()
-        messages.success(request, 'Member was created successfully!')
+        messages.success(request, 'File uploaded successfully!')
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
         return redirect('fileupload')
@@ -262,5 +266,5 @@ def changePassword(request):
 def deleteFiles(request, id):
     file = Document.objects.get(id=id)
     file.delete()
-    messages.error(request, 'User was deleted successfully!')
+    messages.warning(request, 'File was deleted successfully!')
     return redirect('/fileupload')

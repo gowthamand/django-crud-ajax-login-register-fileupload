@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.core.validators import RegexValidator
 
 
 # Create your models here.

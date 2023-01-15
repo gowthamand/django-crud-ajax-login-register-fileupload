@@ -1,102 +1,155 @@
 {% extends 'layout/app.html' %}
-{% block stylesheet %}
-<style>
-</style>
-{% endblock %}
+
+{% load static %}
+
 {% block body %}
-    <div id="content-wrapper">
-        <div class="container-fluid">
-            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#">Dashboard</a>
-                </li>
-                <li class="breadcrumb-item active">Ajax Crud</li>
-            </ol>
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    Ajax Crud
-                </div>
-                <div class="card-body">
-                    <form class="form-horizontal" id="example-form" action="ajax" method="POST">
-                        {% csrf_token %}
-                         <div class="form-group">
-                             <div class="form-row">
-                                 <div class="col-md-6">
-                                     <div class="form-label-group">
-                                         <input class="form-control" type="text" id="example-text-input" placeholder="Text" required>
-                                         <label for="example-text-input">Text</label>
-                                     </div>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">AJAX</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item active">AJAX </li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+            </div>
+             <div class="card-body">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                 <div class="bd-example">
+                     <form id="example-form" action="ajax" method="POST">
+                         {% csrf_token %}
+                         <div class="row mb-3">
+                             <div class="col">
+                                 <div class="form-floating mb-3 mb-md-0">
+                                      <input class="form-control" type="text" id="example-text-input" placeholder="Text" required>
+                                     <label for="example-text-input">Text</label>
                                  </div>
-                                 <div class="col-md-6">
-                                     <div class="form-label-group">
-                                         <input type="search" class="form-control"  placeholder="Search" id="example-search-input" required>
-                                         <label for="example-search-input">Search</label>
-                                     </div>
+                             </div>
+                             <div class="col">
+                                 <div class="form-floating">
+                                     <input type="search" class="form-control"  placeholder="Search" id="example-search-input" required>
+                                     <label for="example-search-input">Search</label>
                                  </div>
                              </div>
                          </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                        <input type="email" class="form-control" placeholder="Email" id="example-email-input" required>
-                                        <label for="example-email-input">Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                        <input type="tel" class="form-control" placeholder="Mobile Number" id="example-tel-input">
-                                        <label for="example-tel-input">Mobile Number</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
-                    </form>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-table"></i>
-                    Ajax List
-                </div>
-                <div class="table">
-                    <table class="table table-bordered" id="myTable">
-                        <thead>
-                        <tr>
-                            <th>Text</th>
-                            <th>Search</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th>Created At</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for ajax in ajax_list %}
-                            <tr id="table-{{ ajax.id }}">
-                                <td>{{ ajax.text }}</td>
-                                <td>{{ ajax.search }}</td>
-                                <td>{{ ajax.email }}</td>
-                                <td>{{ ajax.telephone }}</td>
-                                <td>{{ ajax.created_at  |date:"d-m-Y H:i:s" }}</td>
-                                <td><a class="btn btn-sm btn-warning"><span class="fa fa-edit"></span> Edit</a>
-                                    <a class="btn btn-sm btn-danger delete" data-id="{{ ajax.id }}"><span
-                                            class="fa fa-trash"></span> Delete</a></td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                         <div class="row mb-3">
+                             <div class="col">
+                                 <div class="form-floating mb-3 mb-md-0">
+                                    <input type="email" class="form-control" placeholder="Email" id="example-email-input" required>
+                                    <label for="example-email-input">Email</label>
+                                 </div>
+                             </div>
+                             <div class="col">
+                                 <div class="form-floating">
+                                    <input type="tel" class="form-control" placeholder="Mobile Number" id="example-tel-input">
+                                    <label for="example-tel-input">Mobile Number</label>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="row mb-3">
+                            <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
+                         </div>
+                     </form>
+                 </div>
+             </div>
         </div>
+    </div>
+{#    <div id="content-wrapper">#}
+{#        <div class="container-fluid">#}
+{#            <!-- Breadcrumbs-->#}
+{#            <ol class="breadcrumb">#}
+{#                <li class="breadcrumb-item">#}
+{#                    <a href="#">Dashboard</a>#}
+{#                </li>#}
+{#                <li class="breadcrumb-item active">Ajax Crud</li>#}
+{#            </ol>#}
+{#            {% for message in messages %}#}
+{#                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">#}
+{#                    {{ message }}#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#            <div class="card mb-3">#}
+{#                <div class="card-header">#}
+{#                    <i class="fas fa-table"></i>#}
+{#                    Ajax Crud#}
+{#                </div>#}
+{#                <div class="card-body">#}
+{#                    <form class="form-horizontal" >#}
+{#                        {% csrf_token %}#}
+{#                         <div class="form-group">#}
+{#                             <div class="form-row">#}
+{#                                 <div class="col-md-6">#}
+{#                                     <div class="form-label-group">#}
+{#                                         <input class="form-control" type="text" id="example-text-input" placeholder="Text" required>#}
+{#                                         <label for="example-text-input">Text</label>#}
+{#                                     </div>#}
+{#                                 </div>#}
+{#                                 <div class="col-md-6">#}
+{#                                     <div class="form-label-group">#}
+{#                                         <input type="search" class="form-control"  placeholder="Search" id="example-search-input" required>#}
+{#                                         <label for="example-search-input">Search</label>#}
+{#                                     </div>#}
+{#                                 </div>#}
+{#                             </div>#}
+{#                         </div>#}
+{#                        <div class="form-group">#}
+{#                            <div class="form-row">#}
+{#                                <div class="col-md-6">#}
+{#                                    <div class="form-label-group">#}
+{#                                        <input type="email" class="form-control" placeholder="Email" id="example-email-input" required>#}
+{#                                        <label for="example-email-input">Email</label>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-md-6">#}
+{#                                    <div class="form-label-group">#}
+
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>#}
+{#                    </form>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="card mb-3">#}
+{#                <div class="card-header">#}
+{#                    <i class="fas fa-table"></i>#}
+{#                    Ajax List#}
+{#                </div>#}
+{#                <div class="table">#}
+{#                    <table class="table table-bordered" id="myTable">#}
+{#                        <thead>#}
+{#                        <tr>#}
+{#                            <th>Text</th>#}
+{#                            <th>Search</th>#}
+{#                            <th>Email</th>#}
+{#                            <th>Mobile</th>#}
+{#                            <th>Created At</th>#}
+{#                            <th>Action</th>#}
+{#                        </tr>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                        {% for ajax in ajax_list %}#}
+{#                            <tr id="table-{{ ajax.id }}">#}
+{#                                <td>{{ ajax.text }}</td>#}
+{#                                <td>{{ ajax.search }}</td>#}
+{#                                <td>{{ ajax.email }}</td>#}
+{#                                <td>{{ ajax.telephone }}</td>#}
+{#                                <td>{{ ajax.created_at  |date:"d-m-Y H:i:s" }}</td>#}
+{#                                <td><a class="btn btn-sm btn-warning"><span class="fa fa-edit"></span> Edit</a>#}
+{#                                    <a class="btn btn-sm btn-danger delete" data-id="{{ ajax.id }}"><span#}
+{#                                            class="fa fa-trash"></span> Delete</a></td>#}
+{#                            </tr>#}
+{#                        {% endfor %}#}
+{#                        </tbody>#}
+{#                    </table>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
 {% endblock %}
 {% block javascript %}
   <script>
