@@ -104,11 +104,13 @@ def fileupload(request):
         context = {'documents': documents}
     return render(request, 'fileupload.html', context)
 
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 @login_required
 def ajax(request):
     if request.method == 'POST':
-        if request.is_ajax():
+        if is_ajax(request):
             data = Ajax(
                 text=request.POST['text'],
                 search=request.POST['search'],
@@ -129,7 +131,7 @@ def ajax(request):
 @csrf_protect
 def getajax(request):
     if request.method == 'GET':
-        if request.is_ajax():
+        if is_ajax(request):
             data = Ajax.objects.order_by('-created_at').first()
             created = data.created_at.strftime('%m-%d-%Y %H:%M:%S')
             datas = {"id": data.id, "text": data.text, "search": data.search, "email": data.email,
@@ -142,7 +144,7 @@ def getajax(request):
 @csrf_protect
 def ajax_delete(request):
     if request.method == 'GET':
-        if request.is_ajax():
+        if is_ajax(request):
             id = request.GET['id']
             ajax = Ajax.objects.get(id=id)
             ajax.delete()
