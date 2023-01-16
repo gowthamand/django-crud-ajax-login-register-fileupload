@@ -1,19 +1,15 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Member, Document, Ajax, CsvUpload
 import datetime
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from crud.forms import *
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
 
 
 # Create your views here.
@@ -157,8 +153,9 @@ def ajax_delete(request):
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
+        import pdb;pdb.set_trace()
         if form.is_valid():
-            user = User.objects.create_user(
+            users = User(
                 username=form.cleaned_data['username'],
                 password=form.cleaned_data['password1'],
                 is_staff=True,
@@ -166,8 +163,14 @@ def register(request):
                 is_superuser=True,
                 email=form.cleaned_data['email'],
                 first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name']
+                last_name=form.cleaned_data['last_name'],
             )
+            try:
+                users.full_clean()
+            except ValidationError as e:
+                pass
+            users.save()
+            messages.success(request, 'Member was created successfully!')
             return HttpResponseRedirect('/register/success/')
     else:
         form = RegistrationForm()
@@ -193,7 +196,7 @@ def users(request):
 def user_delete(request, id):
     user = User.objects.get(id=id)
     user.delete()
-    messages.error(request, 'User was deleted successfully!')
+    messages.warning(request, 'User was deleted successfully!')
     return redirect('/users')
 
 @login_required
@@ -216,15 +219,15 @@ def upload_csv(request):
         csv_file = request.FILES["csv_file"]
 
         if len(csv_file) == 0:
-            messages.error(request, 'Empty File')
+            messages.warning(request, 'Empty File')
             return render(request, 'upload_csv.html')
 
         if not csv_file.name.endswith('.csv'):
-            messages.error(request, 'File is not CSV type')
+            messages.warning(request, 'File is not CSV type')
             return render(request, 'upload_csv.html')
 
         if csv_file.multiple_chunks():
-            messages.error(request, 'Uploaded file is too big (%.2f MB).' % (csv_file.size / (1000 * 1000),))
+            messages.warning(request, 'Uploaded file is too big (%.2f MB).' % (csv_file.size / (1000 * 1000),))
             return render(request, 'upload_csv.html')
 
         file_data = csv_file.read().decode("utf-8")
@@ -237,7 +240,7 @@ def upload_csv(request):
                         fields[3] == 'notes'):
                     pass
                 else:
-                    messages.error(request, 'File is not Correct Headers')
+                    messages.warning(request, 'File is not Correct Headers')
                     return render(request, 'upload_csv.html')
                     break
             else:
@@ -254,7 +257,7 @@ def upload_csv(request):
         return redirect('/upload/csv/')
 
     except Exception as e:
-        messages.error(request, "Unable to upload file. " + e)
+        messages.warning(request, "Unable to upload file. " + e)
         return redirect('/upload/csv/')
 
 

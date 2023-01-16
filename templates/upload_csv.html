@@ -1,102 +1,141 @@
+
+{#    <div id="content-wrapper">#}
+{#    <div class="container-fluid">#}
+{#        <!-- Breadcrumbs-->#}
+{#        <ol class="breadcrumb">#}
+{#            <li class="breadcrumb-item">#}
+{#                <a href="#">Dashboard</a>#}
+{#            </li>#}
+{#            <li class="breadcrumb-item active">CSV Upload</li>#}
+{#        </ol>#}
+{#        {% for message in messages %}#}
+{#            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">#}
+{#                {{ message }}#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#        <div class="card mb-3">#}
+{#            <div class="card-header">#}
+{#                <i class="fas fa-table"></i>#}
+{#                CSV Upload#}
+{#               #}
+{#            </div>#}
+{#            <div class="card-body">#}
+{#                <form action="{% url "upload_csv" %}" method="POST" enctype="multipart/form-data"#}
+{#                      class="form-horizontal">#}
+{#                    {% csrf_token %}#}
+{#                    <div class="form-group">#}
+{#                        <div class="form-row">#}
+{#                            <div class="col-md-6">#}
+{#                                <div class="input-group input-group-lg">#}
+{#                                    <div class="custom-file">#}
+{#                                        <input type="file" class="form-control custom-file-input file" name="csv_file"#}
+{#                                               id="input01">#}
+{#                                        <label class="custom-file-label" id="fileLabel" for="input01">Choose#}
+{#                                            file</label>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div class="col-md-6">#}
+{#                                <div class="input-group input-group-lg">#}
+{#                                    <div class="custom-file">#}
+{#                                        <button class="btn btn-primary btn-block" id="submitBtn" disabled type="submit">Upload &nbsp;&nbsp;&nbsp;<span></span>#}
+{#                                        </button>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="card mb-3">#}
+{#            <div class="card-header">#}
+{#                <i class="fas fa-table"></i>#}
+{#                File List#}
+{#            </div>#}
+
+
+
 {% extends 'layout/app.html' %}
 {% load static %}
-{% block stylesheet %}
-    <style>
-    </style>
-{% endblock %}
 {% block body %}
-    <div id="content-wrapper">
-    <div class="container-fluid">
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
-            </li>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">File Upload</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
             <li class="breadcrumb-item active">CSV Upload</li>
         </ol>
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-        <div class="card mb-3">
+        <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-table"></i>
+                <i class="fas fa-table me-1"></i>
                 CSV Upload
-                <a class="btn-sm btn btn-success" href="{% static 'sample.csv' %}"  download style="float: right"><span class="fa fa-download" ></span> &nbsp;download sample CSV</a>
+                 <a class="btn-sm btn btn-success" href="{% static 'sample.csv' %}" download style="float: right"><span class="fa fa-download" ></span> &nbsp;download sample CSV</a>
             </div>
             <div class="card-body">
-                <form action="{% url "upload_csv" %}" method="POST" enctype="multipart/form-data"
-                      class="form-horizontal">
+                <form class="form-horizontal" action="{% url "upload_csv" %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="input-group input-group-lg">
-                                    <div class="custom-file">
-                                        <input type="file" class="form-control custom-file-input file" name="csv_file"
-                                               id="input01">
-                                        <label class="custom-file-label" id="fileLabel" for="input01">Choose
-                                            file</label>
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control custom-file-input file" name="csv_file" id="input01">
                             </div>
-
-                            <div class="col-md-6">
-                                <div class="input-group input-group-lg">
-                                    <div class="custom-file">
-                                        <button class="btn btn-primary btn-block" id="submitBtn" disabled type="submit">Upload &nbsp;&nbsp;&nbsp;<span></span>
-                                        </button>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group mb-3">
+                                <button class="btn btn-primary btn-block" type="submit">Submit &nbsp;&nbsp;&nbsp;<span></span></button>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="card mb-3">
+        <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-table"></i>
+                <i class="fas fa-table me-1"></i>
                 File List
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-sm" id="dataTable">
-                        <thead>
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <table class="table table-bordered" id="datatablesSimple" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">description</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Notes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for member in csvdata %}
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">description</th>
-                            <th scope="col">End Date</th>
-                            <th scope="col">Notes</th>
+                            <td>{{ member.id }}</td>
+                            <td>{{ member.name }}</td>
+                            <td>{{ member.description }}</td>
+                            <td>{{ member.end_date }}</td>
+                            <td>{{ member.notes }}</td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for member in csvdata %}
-                            <tr>
-                                <td>{{ member.id }}</td>
-                                <td>{{ member.name }}</td>
-                                <td>{{ member.description }}</td>
-                                <td>{{ member.end_date }}</td>
-                                <td>{{ member.notes }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 {% endblock %}
 {% block javascript %}
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
     <script>
         $(document).on('change', '.file', function (event) {
             document.getElementById('fileLabel').innerHTML = event.target.files[0].name;
-            if (event.target.files[0].name){
+            if (event.target.files[0].name) {
                 document.getElementById('submitBtn').disabled = false;
             }
         });
     </script>
-
 {% endblock %}
