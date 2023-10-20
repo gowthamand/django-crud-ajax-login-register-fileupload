@@ -1,11 +1,10 @@
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](#)
-[![npm version](https://img.shields.io/npm/v/startbootstrap-sb-admin.svg)](#)
-[![Build Status](https://travis-ci.org/BlackrockDigital/startbootstrap-sb-admin.svg)](#)
-[![dependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin/status.svg)](#)
-[![devDependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin/dev-status.svg)](#)
-
-
-# <a>Django Crud, Ajax, Login, Register,Dashboard Etc </a>
+# Django CRUD
+# Django Crud Github
+# Django Crud Application Github
+# Django ajax CRUD Github
+# Django Boilerplate application Github
+# Django Register Login fileupload Github
+# Django Sample App Github
 
 ### Live demo <a target="_blank" href="https://gowtham-django-crud.herokuapp.com/">Click Here</a>
 ##### username : gowthaman.nkl1@gmail.com , password : Welcome@123
@@ -24,6 +23,8 @@
 - 9 . CSV Export
 
 # Step for Set Up
+
+
 ``` 
  1. git clone https://github.com/gowthamand/django-crud-ajax-login-register-fileupload
 
