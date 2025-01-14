@@ -1,2 +1,2 @@
-Django==4.2.16
+Django==4.2.18
 django-widget-tweaks==1.4.12
