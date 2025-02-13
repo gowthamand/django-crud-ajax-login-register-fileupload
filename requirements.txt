@@ -1,2 +1,2 @@
-django
-django-widget-tweaks
+Django==4.2.16
+django-widget-tweaks==1.4.12
