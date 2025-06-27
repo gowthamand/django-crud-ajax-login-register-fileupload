@@ -73,13 +73,18 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# Use MySQL as the database backend
+# Make sure to install mysqlclient: pip install mysqlclient
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'your_db_name',         # Update this to your database name
+        'USER': 'your_db_user',         # Update this to your database user
+        'PASSWORD': 'your_db_password', # Update this to your database password
+        'HOST': 'localhost',            # Set to your MySQL host, usually 'localhost'
+        'PORT': '3306',                 
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
