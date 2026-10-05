@@ -28,7 +28,7 @@
 ``` 
  1. git clone https://github.com/gowthamand/django-crud-ajax-login-register-fileupload
 
- 2. Change settings.py MYSQL CONFIGURATIONS (name, user, password) [Make sure to install mysqlclient: pip install mysqlclient]
+ 2. Change settings.py PostgreSQL CONFIGURATIONS (name, user, password) [Make sure to install psycopg2: pip install psycopg2-binary]
 
  3.  cd django-crud-ajax-login-register-fileupload
 

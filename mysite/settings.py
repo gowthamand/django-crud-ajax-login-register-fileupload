@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+from urllib.parse import parse_qsl, unquote, urlparse
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +28,7 @@ SECRET_KEY = 'django-insecure-_jp+i(q1%hu^84h%ft$(27t*2%m+)@w+b_q0wan69kb3m!=+y0
 DEBUG = True
 
 #ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -73,16 +76,33 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# Use MySQL as the database backend
-# Make sure to install mysqlclient: pip install mysqlclient
+# # Use MySQL as the database backend
+# # Make sure to install mysqlclient: pip install mysqlclient
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'your_db_name',         # Update this to your database name
+#         'USER': 'your_db_user',         # Update this to your database user
+#         'PASSWORD': 'your_db_password', # Update this to your database password
+#         'HOST': 'localhost',            # Set to your MySQL host, usually 'localhost'
+#         'PORT': '3306',
+#     }
+# }
+
+# Use PostgreSQL as the database backend
+# Make sure to install psycopg2: pip install psycopg2-binary
+# Credentials are read from DATABASE_URL (set in the git-ignored .env file)
+load_dotenv(BASE_DIR / '.env')
+_db_url = urlparse(os.environ['DATABASE_URL'])
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'your_db_name',         # Update this to your database name
-        'USER': 'your_db_user',         # Update this to your database user
-        'PASSWORD': 'your_db_password', # Update this to your database password
-        'HOST': 'localhost',            # Set to your MySQL host, usually 'localhost'
-        'PORT': '3306',                 
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': _db_url.path.lstrip('/'),
+        'USER': unquote(_db_url.username or ''),
+        'PASSWORD': unquote(_db_url.password or ''),
+        'HOST': _db_url.hostname,
+        'PORT': str(_db_url.port or 5432),
+        'OPTIONS': dict(parse_qsl(_db_url.query)),
     }
 }
 # Password validation

@@ -1,2 +1,4 @@
 django
 django-widget-tweaks
+psycopg2-binary
+python-dotenv

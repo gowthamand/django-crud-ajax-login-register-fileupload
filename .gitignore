@@ -4,3 +4,4 @@ mysite/__pycache__/
 .idea
 db.sqlite3
 staticfiles
+.env
