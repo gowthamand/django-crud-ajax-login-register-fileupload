@@ -93,14 +93,15 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Make sure to install psycopg2: pip install psycopg2-binary
 # Credentials are read from DATABASE_URL (set in the git-ignored .env file)
 load_dotenv(BASE_DIR / '.env')
-_db_url = urlparse(os.environ['DATABASE_URL'])
+# DATABASE_URL may be absent during the Vercel build (collectstatic doesn't need a database)
+_db_url = urlparse(os.environ.get('DATABASE_URL', ''))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': _db_url.path.lstrip('/'),
         'USER': unquote(_db_url.username or ''),
         'PASSWORD': unquote(_db_url.password or ''),
-        'HOST': _db_url.hostname,
+        'HOST': _db_url.hostname or '',
         'PORT': str(_db_url.port or 5432),
         'OPTIONS': dict(parse_qsl(_db_url.query)),
     }
