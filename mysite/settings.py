@@ -106,6 +106,17 @@ DATABASES = {
         'OPTIONS': dict(parse_qsl(_db_url.query)),
     }
 }
+if not DATABASES['default']['NAME']:
+    # Safe diagnostics (no secrets) to help spot a missing or malformed DATABASE_URL
+    import sys
+    _raw = os.environ.get('DATABASE_URL')
+    print(
+        'DATABASE_URL check: set=%s length=%s starts_with=%r host=%r' % (
+            _raw is not None, len(_raw or ''), (_raw or '')[:11], _db_url.hostname,
+        ),
+        file=sys.stderr,
+    )
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
