@@ -22,6 +22,7 @@
                 <div class="bd-example">
                     <form id="example-form" action="ajax" method="POST">
                         {% csrf_token %}
+                        <div id="form-errors" class="alert alert-danger" style="display: none;"></div>
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="form-floating mb-3 mb-md-0">
@@ -105,6 +106,25 @@
 {% block javascript %}
     <script>
         $(document).ready(function () {
+            function showSuccess(message) {
+                var successAlert = $('<div class="alert alert-success alert-dismissible">' + message + '</div>');
+                $("#example-form").prepend(successAlert);
+                setTimeout(function () {
+                    successAlert.fadeOut('slow', function () {
+                        $(this).remove();
+                    });
+                }, 3000);
+            }
+
+            function showError(message) {
+                $("#form-errors").html(message).show();
+                setTimeout(function () {
+                    $("#form-errors").fadeOut('slow', function () {
+                        $(this).empty();
+                    });
+                }, 3000);
+            }
+
             $('#example-form').submit(function (event) {
                 var text = $('#example-text-input').val();
                 var search = $('#example-search-input').val();
@@ -125,6 +145,8 @@
                 })
                     .done(function (data) {
                         $("#example-form").trigger("reset");
+                        $("#form-errors").hide().empty();
+                        showSuccess('Data saved successfully!');
                         $.get('getajax', function (response) {
 
                         })
@@ -136,8 +158,22 @@
                             <a class='btn btn-sm btn-danger delete' data-id='" + datas.id + "'><span class='fa fa-trash'></span> Delete</a> </td></tr>");
                             })
                             .fail(function () {
-                                $("#fails").show();
+                                showError('An error occurred while fetching the latest data.');
                             })
+                    })
+                    .fail(function (jqXHR) {
+                        var response = jqXHR.responseJSON;
+                        var messages = [];
+                        if (response && response.errors) {
+                            $.each(response.errors, function (field, errors) {
+                                messages.push(field + ': ' + errors.join(', '));
+                            });
+                        } else if (response && response.message) {
+                            messages.push(response.message);
+                        } else {
+                            messages.push('An error occurred while processing your request.');
+                        }
+                        showError(messages.join('<br>'));
                     });
 
                 event.preventDefault();

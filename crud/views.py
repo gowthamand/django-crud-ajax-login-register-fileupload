@@ -107,17 +107,26 @@ def is_ajax(request):
 def ajax(request):
     if request.method == 'POST':
         if is_ajax(request):
-            data = Ajax(
-                text=request.POST['text'],
-                search=request.POST['search'],
-                email=request.POST['email'],
-                telephone=request.POST['telephone'],
-                created_at=datetime.datetime.now(),
-                updated_at=datetime.datetime.now(),
-            )
-            data.save()
-            astr = "<html><b> you sent an ajax post request </b> <br> returned data: %s</html>" % data
-            return JsonResponse({'data': 'success'})
+            try:
+                data = Ajax(
+                    text=request.POST['text'],
+                    search=request.POST['search'],
+                    email=request.POST['email'],
+                    telephone=request.POST['telephone'],
+                    created_at=datetime.datetime.now(),
+                    updated_at=datetime.datetime.now(),
+                )
+                data.full_clean()
+                data.save()
+                astr = "<html><b> you sent an ajax post request </b> <br> returned data: %s</html>" % data
+                return JsonResponse({'data': 'success'})
+            except ValidationError as e:
+                return JsonResponse({'data': 'error', 'errors': e.message_dict}, status=400)
+            except Exception as e:
+                return JsonResponse({'data': 'error', 'message': str(e)}, status=400)
+        else:
+            return JsonResponse({'data': 'invalid data'}, status=400)
+
     else:
         ajax_list = Ajax.objects.order_by('-created_at')
         context = {'ajax_list': ajax_list}
