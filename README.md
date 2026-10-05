@@ -1,12 +1,12 @@
-#### Django CRUD
+****#### Django CRUD
 #### Django Crud Github
-#### Django Crud Application Github
+#### Django Crud Application GitHub
 #### Django ajax CRUD Github
-#### Django Boilerplate application Github
-#### Django Register Login fileupload Github
+#### Django Boilerplate application GitHub
+#### Django Register Login fileUpload GitHub
 #### Django Sample App Github
 
-### Live demo <a target="_blank" href="https://gowtham-django-crud.herokuapp.com/">Click Here</a>
+# Live Demo 🌟 <a target="_blank" href="https://django-crud-ajax-login-register-fil.vercel.app/">![Blinking Click Here](blink.svg)</a>
 ##### username : gowthaman.nkl1@gmail.com , password : Welcome@123
 
 [:heart: Sponsor](https://github.com/sponsors/gowthamand)
